@@ -1,0 +1,23 @@
+/cmake-build-debug/
+/out/build
+/.vs
+/dist/libantlr4-runtime-static.a
+/strawberry/generated/StrawberryLexer.cpp
+/strawberry/generated/StrawberryLexer.h
+/strawberry/generated/StrawberryLexer.interp
+/strawberry/generated/StrawberryLexer.tokens
+/strawberry/generated/StrawberryParser.cpp
+/strawberry/generated/StrawberryParser.h
+/strawberry/generated/StrawberryParser.interp
+/strawberry/generated/StrawberryParser.tokens
+/strawberry/generated/StrawberryParserBaseListener.cpp
+/strawberry/generated/StrawberryParserBaseListener.h
+/strawberry/generated/StrawberryParserBaseVisitor.cpp
+/strawberry/generated/StrawberryParserBaseVisitor.h
+/strawberry/generated/StrawberryParserListener.cpp
+/strawberry/generated/StrawberryParserListener.h
+/strawberry/generated/StrawberryParserVisitor.cpp
+/strawberry/generated/StrawberryParserVisitor.h
+
+# Project exclude paths
+/cmake-build-release/CMakeFiles/
