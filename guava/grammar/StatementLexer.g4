@@ -1,4 +1,4 @@
-lexer grammar GuavaLexer;
+lexer grammar StatementLexer;
 
 /* Program Specific */
 Fn: 'fn' ;
@@ -116,3 +116,6 @@ fragment Comment
 :'//' ~('\r' | '\n')*
 |'/*' .*? '*/'
 ;
+
+Unknown: .+? ;
+

@@ -88,6 +88,7 @@ Btick=87
 Ignore=88
 WS=89
 RETURN=90
+Unknown=91
 'fn'=1
 'let'=2
 'if'=3
