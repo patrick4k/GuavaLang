@@ -1,0 +1,116 @@
+{
+  "configurations": [
+    {
+      "name": "x86-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x86" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "variables": [
+        {
+          "name": "ANTLR4_INSTALL",
+          "value": "1",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_STATIC_CRT",
+          "value": "OFF",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_DEMO",
+          "value": "OFF",
+          "type": "STRING"
+        }
+      ],
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": ""
+    },
+    {
+      "name": "x86-Release",
+      "generator": "Ninja",
+      "configurationType": "RelWithDebInfo",
+      "inheritEnvironments": [ "msvc_x86" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "variables": [
+        {
+          "name": "ANTLR4_INSTALL",
+          "value": "1",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_STATIC_CRT",
+          "value": "OFF",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_DEMO",
+          "value": "OFF",
+          "type": "STRING"
+        }
+      ],
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": ""
+    },
+    {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "variables": [
+        {
+          "name": "ANTLR4_INSTALL",
+          "value": "0",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_STATIC_CRT",
+          "value": "ON",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_DEMO",
+          "value": "OFF",
+          "type": "STRING"
+        }
+      ],
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": ""
+    },
+    {
+      "name": "x64-Release",
+      "generator": "Ninja",
+      "configurationType": "RelWithDebInfo",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "variables": [
+        {
+          "name": "ANTLR4_INSTALL",
+          "value": "1",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_STATIC_CRT",
+          "value": "OFF",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_DEMO",
+          "value": "OFF",
+          "type": "STRING"
+        }
+      ],
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": ""
+    }
+  ]
+}
