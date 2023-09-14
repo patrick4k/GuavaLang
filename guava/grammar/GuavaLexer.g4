@@ -9,4 +9,6 @@ fragment Unknown: ~(' '|'\t'|'\r'|'\n')+?;
 fragment UnknownRHS: Nas? Unknown Nas;
 fragment UnknownLHS: Nas Unknown Nas?;
 
-Fn: 'fn' UnknownLHS '{'  '}';
+fragment Scope: '{' Unknown? '}';
+
+FnDelcaration: 'fn' UnknownLHS Scope;

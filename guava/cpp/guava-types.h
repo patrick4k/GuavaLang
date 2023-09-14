@@ -10,14 +10,14 @@
 
 namespace guavalang
 {
-    using String = std::string;
-    using Char = char;
-    using Any = std::any;
-
     template<typename T>
-    inline T Cast(Any any) {
+    inline T Cast(std::any any) {
         return std::any_cast<T>(any);
     }
+
+    using String = std::string;
+    using Any = std::any;
+
 }
 
 #endif //GUAVA_GUAVA_TYPES_H

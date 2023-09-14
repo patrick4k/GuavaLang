@@ -2,8 +2,6 @@
 // Created by Patrick on 9/12/2023.
 //
 
-#include <iostream>
-#include "Arrays.h"
 #include "guava-common.h"
 
 using namespace guavalang;
@@ -12,9 +10,9 @@ using namespace antlr4;
 
 int main(int argc, char** argv) {
     /* Print Argument of Program */
-    std::cout << "Args" << std::endl;
+    COUT << "Args";
     for (int i = 0; i < argc; ++i)
-        std::cout << "\t" << i << ": " << argv[i] << '\n' << std::endl;
+        COUT << "\t" << i << ": " << argv[i] << ENDL;
 
     /* Read File and Create Token Stream */
     auto input = ANTLRFileStream();
@@ -28,6 +26,6 @@ int main(int argc, char** argv) {
     auto tree = parser.script();
     auto visitor = std::make_shared<GuavaFileVisitor>();
     Any reVal = visitor->visitScript(tree);
-    std::cout << Cast<String>(reVal) << std::endl;
+    COUT << Cast<String>(reVal) << ENDL;
     return 0;
 }

@@ -7,4 +7,4 @@ options {
 	tokenVocab = GuavaLexer;
 }
 
-script: Fn EOF;
+script: FnDelcaration EOF;

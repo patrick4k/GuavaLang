@@ -5,5 +5,5 @@
 #include "GuavaFileVisitor.h"
 
 std::any guavaparser::GuavaFileVisitor::visitScript(guavaparser::GuavaParser::ScriptContext *ctx) {
-    return ctx->Fn()->getText();
+    return ctx->FnDelcaration()->getText();
 }

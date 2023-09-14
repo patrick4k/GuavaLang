@@ -21,7 +21,6 @@ function(GenerateParser ParserName)
         )
     endforeach(src_file ${guava-GENERATED_SRC})
 
-    # Generate common parser
     add_custom_target(Generate${ParserName}Parser DEPENDS ${guava-GENERATED_SRC})
     add_custom_command(OUTPUT ${guava-GENERATED_SRC}
             COMMAND
