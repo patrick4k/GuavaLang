@@ -8,10 +8,8 @@
 #include <iostream>
 #include "util/StringUtility.h"
 
-constexpr std::ostream* ConsolePtr = &std::cout;
-constexpr std::ostream* DebugConsolePtr = ConsolePtr;
-#define COUT (*ConsolePtr)
+#define COUT std::cout
 #define ENDL std::endl
-#define DCOUT (*DebugConsolePtr)
+#define DEBUGOUT std::cout
 
 #endif //GUAVA_GUAVA_STATICS_H

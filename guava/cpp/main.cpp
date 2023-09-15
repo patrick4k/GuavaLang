@@ -10,9 +10,9 @@ using namespace antlr4;
 
 int main(int argc, char** argv) {
     /* Print Argument of Program */
-    COUT << "Args";
+    DEBUGOUT << "Args";
     for (int i = 0; i < argc; ++i)
-        COUT << "\t" << i << ": " << argv[i] << ENDL;
+        DEBUGOUT << "\t" << i << ": " << argv[i] << ENDL;
 
     /* Read File and Create Token Stream */
     auto input = ANTLRFileStream();
@@ -26,6 +26,6 @@ int main(int argc, char** argv) {
     auto tree = parser.script();
     auto visitor = std::make_shared<GuavaFileVisitor>();
     Any reVal = visitor->visitScript(tree);
-    COUT << Cast<String>(reVal) << ENDL;
+    DEBUGOUT << Cast<String>(reVal) << ENDL;
     return 0;
 }

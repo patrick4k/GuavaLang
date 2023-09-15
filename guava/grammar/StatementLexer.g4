@@ -1,121 +1,79 @@
 lexer grammar StatementLexer;
 
-/* Program Specific */
-Fn: 'fn' ;
-Decl: 'let' ;
-If: 'if' ;
-Unless: 'unless' ;
-Else: 'else' ;
-Do: 'do' ;
-While: 'while' ;
-Until: 'until' ;
-For: 'for' ;
-Loop: 'loop' ;
+fragment Letter : [a-zA-Z];
+fragment Digit : [0-9];
+fragment Underscore : '_';
+fragment Int : Digit+;
+fragment Float : Digit+ '.' Digit+;
 
-/* Keywords */
-Return: 'return' ;
-Break: 'break' ;
-Next: 'next' ;
-Last: 'last' ;
-Once: 'once' ;
+fragment LineComment: '/.' .*?;
+BlockComment: LineComment './' -> skip;
 
-/* Literals */
-True: 'true' ;
-False: 'false' ;
-Null: 'null' ;
+Nl: LineComment? ([\r\n] | EOF);
 
-/* Util */
-DefId: '_' Id?;
-Number: 'inf' | (Digit+ ('.' Digit+)? | '.' Digit+ ) ('e' '-'? Digit+)?;
-Id: Word (Letter | Digit | Uscore)*;
-String: '"' .*? '"' ;
-StringLit: '\'' .*? '\'' ;
+Space: [ \t]+ -> skip;
+IgnoredNl: '...' Nl -> skip;
 
-Digit: [0-9];
-Word: (Letter)+;
-Letter: UcLetter | LcLetter ;
-UcLetter: [A-Z];
-LcLetter: [a-z];
-
-/* Special */
-DefOr: '\\\\' ;
-Sarrow: '->' ;
-Darrow: '=>' ;
-LRarrow: '>>' ;
-RLarrow: '<<' ;
-Dot2: '..' ;
-Dot3: '...' ;
-As: 'as' ;
-
-/* Assignments */
-PlusEq: '+=' ;
-MinEq: '-=' ;
-MultEq: '*=' ;
-DivEq: '/=' ;
-ModEq: '%=' ;
-PowEq: '^=' ;
-Increm: '++' ;
-Decrem: '--' ;
-
-/* Containers */
-Lbrack: '[' ;
-Rbrack: ']' ;
-Lbrace: '{' ;
-Rbrace: '}' ;
-Lpar: '(' ;
-Rpar: ')' ;
-
-/* Math */
-Pow: '^' ;
-Star: '*' ;
-StarStar: '**' ;
-Bslash: '/' ;
-Mod: '%' ;
-Plus: '+' ;
-Min: '-';
-Eq: '=' ;
-
-/* Bool Compare */
-BoolEq: '==' ;
-BoolDeepEq: '===' ;
-BoolNeq: '!=' ;
-BoolDeepNeq: '!==' ;
-Gt: '>' ;
-GtEq: '>=' ;
-Lt: '<' ;
-LtEq: '<=' ;
-And: '&&' ;
-Or: '||' ;
-
-/* Symbols */
-Uscore: '_' ;
-AndSign: '&' ;
-Doll: '$' ;
-DollLit: '\\$' ;
-Hash: '#' ;
-At: '@' ;
-ExPoint: '!' ;
-Qmark: '?' ;
-Colon: ':' ;
-ColonColon: '::' ;
-Semi: ';' ;
-Fslash: '\\' ;
-Bar: '|' ;
-Dquote: '"' ;
-Squote: '\'' ;
-Com: ',' ;
-Dot: '.' ;
-Squig: '~' ;
-Btick: '`' ;
-
-/* Ignore */
-Ignore: (Comment | WS | RETURN) -> skip ;
-WS: [ \t]+ ;
-RETURN: [\r\n]+ ;
-fragment Comment
-:'//' ~('\r' | '\n')*
-|'/*' .*? '*/'
+Number
+: (Int | Float) ('e' | 'E') ('+' | '-')? Int
+| Int
+| Float
 ;
 
-Unknown: .+? ;
+Identifier : Letter (Letter | Digit | Underscore)*;
 
+fragment MathOps
+: '+'
+| '/' | '//' // Vector counter parts
+| '^' | '^^'
+| '*' | '**'
+| '%' | '%%'
+| '&' | '&&'
+| '|' | '||'
+;
+
+fragment Operators
+: MathOps
+| '=='
+| '!='
+| '<'
+| '>'
+| '<='
+| '>='
+| 'and'
+| 'or'
+;
+
+AssignOp
+: '='
+| MathOps '='
+;
+
+BinaryOrUniaryOp
+: '-'
+;
+
+BinaryOp
+: Operators
+;
+
+UnaryPreOp
+: '!'
+| '++'
+| '--'
+;
+
+LParen: '(';
+RParen: ')';
+LBrace: '{';
+RBrace: '}';
+LBracket: '[';
+RBracket: ']';
+Comma: ',';
+DoubleColon: '::';
+Colon: ':';
+Semicolon: ';';
+
+Dot: '.';
+
+Unknown: '\'' .+? '\'';
