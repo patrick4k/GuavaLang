@@ -1,30 +1,21 @@
 lexer grammar StatementLexer;
 
-fragment Letter : [a-zA-Z];
-fragment Digit : [0-9];
-fragment Underscore : '_';
-fragment Int : Digit+;
-fragment Float : Digit+ '.' Digit+;
-
-fragment LineComment: '/.' .*?;
-BlockComment: LineComment './' -> skip;
+fragment LineComment: '/' Identifier? ':' .*?;
+fragment BlockComment: '/*' .*? '*/';
+fragment Space: [ \t]+;
 
 Nl: LineComment? ([\r\n] | EOF);
 
-Space: [ \t]+ -> skip;
-IgnoredNl: '...' Nl -> skip;
-
-Number
-: (Int | Float) ('e' | 'E') ('+' | '-')? Int
-| Int
-| Float
+SkipCommon
+: (BlockComment
+| Space) -> skip
 ;
 
-Identifier : Letter (Letter | Digit | Underscore)*;
+IgnoredNl: '...' SkipCommon* Nl -> skip;
 
 fragment MathOps
 : '+'
-| '/' | '//' // Vector counter parts
+| '/' | '//' // Double op for vector counter parts
 | '^' | '^^'
 | '*' | '**'
 | '%' | '%%'
@@ -32,16 +23,18 @@ fragment MathOps
 | '|' | '||'
 ;
 
+LessThan: '<';
+GreaterThan: '>';
+
 fragment Operators
 : MathOps
 | '=='
 | '!='
-| '<'
-| '>'
 | '<='
 | '>='
 | 'and'
 | 'or'
+| '.'
 ;
 
 AssignOp
@@ -59,7 +52,10 @@ BinaryOp
 
 UnaryPreOp
 : '!'
-| '++'
+;
+
+UnaryPostOp
+: '++'
 | '--'
 ;
 
@@ -73,7 +69,45 @@ Comma: ',';
 DoubleColon: '::';
 Colon: ':';
 Semicolon: ';';
+String
+: '"' .*? '"'
+| '\'' .*? '\''
+;
+CustomLiteral: '`' .*? '`';
 
-Dot: '.';
+BodyKeyword
+: 'for'
+| 'while'
+| 'if'
+| 'unless'
+| 'loop'
+;
 
-Unknown: '\'' .+? '\'';
+BodyFollowUpKeyword
+: 'else'
+;
+
+Keyword
+: 'return'
+| 'break'
+| 'next'
+| 'last'
+;
+
+Fn: 'fn';
+
+MatchKeyword: 'match';
+
+fragment Letter : [a-zA-Z];
+fragment Digit : [0-9];
+fragment Underscore : '_';
+fragment Int : Digit+;
+fragment Float : Digit+ '.' Digit+;
+
+Number
+: (Int | Float) ('e' | 'E') ('+' | '-')? Int
+| Int
+| Float
+;
+
+Identifier : Letter (Letter | Digit | Underscore)*;
