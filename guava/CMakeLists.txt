@@ -29,7 +29,7 @@ foreach(src_file ${guava_SRC})
           )
 endforeach(src_file ${guava_SRC})
 
-add_executable(guava cpp/guava-statics.h cpp/util/util-common.h cpp/util/StringUtility.cpp cpp/util/StringUtility.h cpp/guavabytes/IGuavaByteInstruction.h cpp/guavabytes/GuavaByteCode.cpp cpp/guavabytes/GuavaByteCode.h)
+add_executable(guava cpp/guava-statics.h cpp/util/util-common.h cpp/util/StringUtility.cpp cpp/util/StringUtility.h cpp/guavabytes/IGuavaByteInstruction.h cpp/guavabytes/GuavaByteCode.cpp cpp/guavabytes/GuavaByteCode.h cpp/parsers/GuavaStatementVisitor.cpp cpp/parsers/GuavaStatementVisitor.h)
 GenerateParser(Guava)
 GenerateParser(Statement)
 

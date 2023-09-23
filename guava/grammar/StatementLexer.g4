@@ -23,8 +23,34 @@ fragment MathOps
 | '|' | '||'
 ;
 
+Dot: '.';
+
+Pow: '^';
+PowPow: '^^';
+
+Mult: '*' | '**';
+Div: '/' | '//';
+Mod: '%' | '%%';
+
+Plus: '+';
+PlusPlus: '++';
+Min: '-';
+MinMin: '--';
+
+OptionalOr: '\\';
+OptionalOrOr: '\\\\';
+
 LessThan: '<';
 GreaterThan: '>';
+Equal: '==';
+NotEqual: '!=';
+LessThanEqual: '<=';
+GreaterThanEqual: '>=';
+And: 'and';
+Or: 'or';
+
+StreamIn: '<<';
+StreamOut: '>>';
 
 fragment Operators
 : MathOps
@@ -42,22 +68,13 @@ AssignOp
 | MathOps '='
 ;
 
-BinaryOrUniaryOp
-: '-'
-;
 
 BinaryOp
 : Operators
 ;
 
-UnaryPreOp
-: '!'
-;
-
-UnaryPostOp
-: '++'
-| '--'
-;
+Not: '!';
+Question: '?';
 
 LParen: '(';
 RParen: ')';
@@ -73,11 +90,16 @@ String
 : '"' .*? '"'
 | '\'' .*? '\''
 ;
-CustomLiteral: '`' .*? '`';
+
+CustomLiteral
+: '`' .*? '`'
+| Number Underscore? Identifier
+;
 
 BodyKeyword
 : 'for'
 | 'while'
+| 'until'
 | 'if'
 | 'unless'
 | 'loop'
@@ -94,7 +116,11 @@ Keyword
 | 'last'
 ;
 
+Let: 'let';
 Fn: 'fn';
+Arrow: '->';
+
+Type: 'type';
 
 MatchKeyword: 'match';
 
@@ -111,3 +137,4 @@ Number
 ;
 
 Identifier : Letter (Letter | Digit | Underscore)*;
+DefaultIdentifier: Underscore (Letter | Digit | Underscore)*;
