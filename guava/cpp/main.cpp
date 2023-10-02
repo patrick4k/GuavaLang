@@ -12,12 +12,12 @@ int main(int argc, char** argv) {
     /* Print Argument of Program */
     DEBUGOUT << "Args";
     for (int i = 0; i < argc; ++i)
-        DEBUGOUT << "\t" << i << ": " << argv[i] << ENDL;
+        DOUT << "\t" << i << ": " << argv[i] << ENDL;
 
     /* Read File and Create Token Stream */
     auto input = ANTLRFileStream();
     input.loadFromFile(argv[1]);
-    GuavaLexer lexer(&input);
+    CommonLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     tokens.fill();
 

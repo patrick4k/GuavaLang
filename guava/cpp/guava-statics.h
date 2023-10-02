@@ -10,6 +10,7 @@
 
 #define COUT std::cout
 #define ENDL std::endl
-#define DEBUGOUT std::cout
+#define DOUT std::cout
+#define DEBUGOUT DOUT << "DEBUG: \n"
 
 #endif //GUAVA_GUAVA_STATICS_H

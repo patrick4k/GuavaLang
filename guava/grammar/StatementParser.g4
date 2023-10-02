@@ -4,7 +4,7 @@ parser grammar StatementParser;
 }
 
 options {
-	tokenVocab = StatementLexer;
+	tokenVocab = CommonLexer;
 }
 
 body: Nl* scentenceCollection;
@@ -24,13 +24,23 @@ closeBracket_: Nl* RBracket;
 scentenceln : scentence end_;
 
 scentence
-: scentence BodyKeyword parenStatementMatrix (BodyFollowUpKeyword statement_)? #compoundStatement
+: scentence BodyKeyword parenOptStatementMatrix (BodyFollowUpKeyword statement_)? #compoundStatement
 | statement_ #statementScentence_
 ;
 
+followUpStatement_
+: end_* BodyFollowUpKeyword Nl* scope #scopeEnsuredFollowUp
+| end_* BodyFollowUpKeyword statement_ #scopeOrBodyFollowUp
+;
+
+matchStatement
+: Match parenOptStatementMatrix Nl* openBrace_ (expression_ Arrow statement_ end_)* closeBrace_
+;
+
 statement_
-: BodyKeyword parenOptStatementMatrix scope (end_* BodyFollowUpKeyword statement_)? #scopeEnsuredBody
-| BodyKeyword parenStatementMatrix statement_ (end_* BodyFollowUpKeyword statement_)? #scopeOrStatmentBody
+: BodyKeyword parenOptStatementMatrix Nl* scope followUpStatement_? #scopeEnsuredBody
+| BodyKeyword parenStatementMatrix statement_ followUpStatement_? #scopeOrStatmentBody
+| matchStatement #matchStatement_
 | specialAssignment_ #multiAssignmentStatement_
 | assignment_ #assignmentStatement_
 | expression_ #expressionStatement_
@@ -43,24 +53,22 @@ identifier_
 | identifier_ openBrace_ expression_ (Comma? expression_)* closeBrace_ #runtimeTemplatedIdentifier
 | identifier_ DoubleColon identifier_ #nestedIdentifier
 | openParen_ (identifier_ (Comma? identifier_)*)? closeParen_ #tupleIdentifier
-| Type identifier_ (Or identifier_)* #inlineAlisTypeIdentifier
 | Identifier #rawIdentifier
 | DefaultIdentifier #defaultIdentifier
 ;
 
-qualifiers : Let Identifier?;
+declaration : Let Identifier?;
 
-parameter: Identifier (Colon identifier_)?;
+parameter: Identifier (Colon expression_)?;
 parameters: parameter (Comma? parameter)*;
 
 assignment_
-: Type Identifier AssignOp identifier_ (Or identifier_)* #alisTypeIdentifier
-| expression_ AssignOp statement_ #reassignment
+: expression_ AssignOp statement_ #reassignment
 | Fn Identifier openParen_ parameters closeParen_ AssignOp statement_ #inlineFunctionAssignment
-| qualifiers parameter AssignOp statement_ #declaritiveAssignment
+| declaration parameter AssignOp statement_ #declaritiveAssignment
 ;
 
-specialAssignment_: qualifiers openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
+specialAssignment_: declaration openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
 
 unwrappedTuple: expression_ (Comma? expression_)*;
 unwrappedMatrix: unwrappedTuple (end_ unwrappedTuple)*;
@@ -73,12 +81,9 @@ parenStatementMatrix: openParen_ statementMatrix? closeParen_;
 bracketStatementMatrix: openBracket_ statementMatrix? closeBracket_;
 parenOptStatementMatrix: openParen_ statementMatrix? closeParen_ | statementMatrix;
 
-binaryOperator: (BinaryOp | BinaryOrUniaryOp | LessThan | GreaterThan);
+lambda: Fn (openParen_ parameters? closeParen_)? (Arrow expression_)? (statement_ | scope);
 
-lambda: Fn (openParen_ parameters? closeParen_)? (Arrow identifier_)? (statement_ | scope);
-
-// TODO: add match expression
-
+/* Expressions */
 expression_
 
 // Terms
@@ -100,10 +105,10 @@ expression_
 | op=(Not | Min) expression_ #unaryPrefixExpression
 | expression_ op=(PlusPlus | MinMin | Question) #unaryPostfixExpression
 | expression_ op=(Pow | PowPow) expression_ #binaryExpression
-| expression_ op=(Mult | Div | Mod) expression_ #binaryExpression
+| expression_ op=(Mult | Div | Mod | BitOr | BitAnd) expression_ #binaryExpression
 | expression_ op=(Plus | Min) expression_ #binaryExpression
 | expression_ op=(OptionalOr | OptionalOrOr) expression_ #binaryExpression
 | expression_ op=(Equal | NotEqual | LessThan | GreaterThan | LessThanEqual | GreaterThanEqual) expression_ #binaryExpression
-| expression_ op=(And | Or) expression_ #binaryExpression
+| expression_ op=(And | Or | Is) expression_ #binaryExpression
 | expression_ op=(StreamIn | StreamOut) expression_ #binaryExpression
 ;

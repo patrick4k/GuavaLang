@@ -3,8 +3,11 @@ parser grammar GuavaParser;
 @parser::members {
 }
 
+
 options {
-	tokenVocab = GuavaLexer;
+	tokenVocab = CommonLexer;
 }
 
-script: FnDelcaration EOF;
+import StatementParser;
+
+script: scentence;

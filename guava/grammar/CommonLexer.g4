@@ -1,4 +1,4 @@
-lexer grammar StatementLexer;
+lexer grammar CommonLexer;
 
 fragment LineComment: '/' Identifier? ':' .*?;
 fragment BlockComment: '/*' .*? '*/';

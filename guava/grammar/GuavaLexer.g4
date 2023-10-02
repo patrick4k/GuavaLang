@@ -1,5 +1,7 @@
 lexer grammar GuavaLexer;
 
+import StatementLexer;
+
 fragment Ws: [ \t]+;
 fragment Nl: [\r\n]+;
 fragment Na: Ws | Nl;

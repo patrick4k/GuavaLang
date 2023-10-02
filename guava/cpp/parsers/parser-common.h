@@ -5,8 +5,7 @@
 #ifndef GUAVA_PARSER_COMMON_H
 #define GUAVA_PARSER_COMMON_H
 
-#include "GuavaLexer.h"
-#include "GuavaParser.h"
+#include "generated-common.h"
 #include "GuavaParserBaseVisitor.h"
 #include "GuavaFileVisitor.h"
 
