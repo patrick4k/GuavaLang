@@ -6,7 +6,6 @@
 #define GUAVA_GENERATED_COMMON_H
 
 #include "CommonLexer.h"
-#include "GuavaParser.h"
-#include "StatementParser.h"
+#include "GuavaPredicateParser.h"
 
 #endif //GUAVA_GENERATED_COMMON_H

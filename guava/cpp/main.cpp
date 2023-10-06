@@ -2,6 +2,7 @@
 // Created by Patrick on 9/12/2023.
 //
 
+#include "parsers/parser-common.h"
 #include "guava-common.h"
 
 using namespace guavalang;
@@ -10,9 +11,8 @@ using namespace antlr4;
 
 int main(int argc, char** argv) {
     /* Print Argument of Program */
-    DEBUGOUT << "Args";
     for (int i = 0; i < argc; ++i)
-        DOUT << "\t" << i << ": " << argv[i] << ENDL;
+        DEBUGOUT << "Arg " << i << " = " << argv[i] << ENDL;
 
     /* Read File and Create Token Stream */
     auto input = ANTLRFileStream();
@@ -22,10 +22,9 @@ int main(int argc, char** argv) {
     tokens.fill();
 
     /* Create and Visit Script Tree */
-    GuavaParser parser(&tokens);
+    GuavaPredicateParser parser(&tokens);
     auto tree = parser.script();
-    auto visitor = std::make_shared<GuavaFileVisitor>();
-    Any reVal = visitor->visitScript(tree);
-    DEBUGOUT << Cast<String>(reVal) << ENDL;
+    auto visitor = std::make_shared<GuavaScriptVisitor>();
+    Any script = visitor->visitScript(tree);
     return 0;
 }

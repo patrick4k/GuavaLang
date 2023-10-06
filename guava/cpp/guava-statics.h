@@ -6,11 +6,16 @@
 #define GUAVA_GUAVA_STATICS_H
 
 #include <iostream>
-#include "util/StringUtility.h"
+#include <chrono>
+#include "util/string-utility.h"
 
 #define COUT std::cout
 #define ENDL std::endl
 #define DOUT std::cout
-#define DEBUGOUT DOUT << "DEBUG: \n"
+#define DEBUGOUT DOUT << "DEBUG " << RUNTIME << "ms: "
+
+static auto s_startTime = std::chrono::high_resolution_clock::now();
+#define NOW std::chrono::high_resolution_clock::now()
+#define RUNTIME std::chrono::duration_cast<std::chrono::milliseconds>(NOW - s_startTime).count()
 
 #endif //GUAVA_GUAVA_STATICS_H

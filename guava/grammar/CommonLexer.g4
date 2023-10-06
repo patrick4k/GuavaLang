@@ -1,6 +1,6 @@
 lexer grammar CommonLexer;
 
-fragment LineComment: '/' Identifier? ':' .*?;
+fragment LineComment: '/:' .*?;
 fragment BlockComment: '/*' .*? '*/';
 fragment Space: [ \t]+;
 
@@ -15,7 +15,7 @@ IgnoredNl: '...' SkipCommon* Nl -> skip;
 
 fragment MathOps
 : '+'
-| '/' | '//' // Double op for vector counter parts
+| '/' | '//'
 | '^' | '^^'
 | '*' | '**'
 | '%' | '%%'
@@ -24,6 +24,7 @@ fragment MathOps
 ;
 
 Dot: '.';
+DotDot: '..';
 
 Pow: '^';
 PowPow: '^^';
@@ -55,29 +56,14 @@ Is: 'is';
 StreamIn: '<<';
 StreamOut: '>>';
 
-fragment Operators
-: MathOps
-| '=='
-| '!='
-| '<='
-| '>='
-| 'and'
-| 'or'
-| '.'
-;
-
 AssignOp
 : '='
 | MathOps '='
 ;
 
-
-BinaryOp
-: Operators
-;
-
 Not: '!';
 Question: '?';
+Tilda: '~';
 
 LParen: '(';
 RParen: ')';
@@ -89,10 +75,6 @@ Comma: ',';
 DoubleColon: '::';
 Colon: ':';
 Semicolon: ';';
-String
-: '"' .*? '"'
-| '\'' .*? '\''
-;
 
 BodyKeyword
 : 'for'
@@ -114,9 +96,15 @@ Keyword
 | 'last'
 ;
 
+IndexKeyword
+: 'start'
+| 'end'
+;
+
 Let: 'let';
 Fn: 'fn';
 Arrow: '->';
+RLArrow: '<-';
 
 Type: 'type';
 
@@ -139,5 +127,10 @@ CustomLiteral
 | Number Underscore? Identifier
 ;
 
-Identifier : Letter (Letter | Digit | Underscore)*;
+Identifier: Letter (Letter | Digit | Underscore)* '\''*;
 DefaultIdentifier: Underscore (Letter | Digit | Underscore)*;
+
+String
+: '"' .*? '"'
+| '\'' .*? '\''
+;

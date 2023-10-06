@@ -5,6 +5,6 @@
 #ifndef GUAVA_UTIL_COMMON_H
 #define GUAVA_UTIL_COMMON_H
 
-#include "StringUtility.h"
+#include "string-utility.h"
 
 #endif //GUAVA_UTIL_COMMON_H

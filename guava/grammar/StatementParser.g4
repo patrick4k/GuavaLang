@@ -1,18 +1,14 @@
 parser grammar StatementParser;
 
 @parser::members {
+virtual bool isWithinIndexAccess() = 0;
 }
 
 options {
 	tokenVocab = CommonLexer;
 }
 
-body: Nl* scentenceCollection;
-
-scentenceCollection: scentenceln* scentence?;
-scope: openBrace_ scentenceCollection closeBrace_;
-
-// Util
+/* Utility ---------------------------------------------------------------------------------------------------------- */
 end_: (Nl | Semicolon)+;
 openBrace_: LBrace Nl*;
 closeBrace_: Nl* RBrace;
@@ -21,21 +17,28 @@ closeParen_: Nl* RParen;
 openBracket_: LBracket Nl*;
 closeBracket_: Nl* RBracket;
 
-scentenceln : scentence end_;
 
-scentence
-: scentence BodyKeyword parenOptStatementMatrix (BodyFollowUpKeyword statement_)? #compoundStatement
+/* Scentences ------------------------------------------------------------------------------------------------------- */
+
+scope: openBrace_ scentenceCollection closeBrace_;
+scentenceCollection: scentenceln* scentence_?;
+
+scentenceln : scentence_ end_;
+
+scentence_
+: scentence_ BodyKeyword parenOptStatementMatrix (BodyFollowUpKeyword statement_)? #compoundStatement
 | statement_ #statementScentence_
 ;
+
+
+/* Statements ------------------------------------------------------------------------------------------------------- */
 
 followUpStatement_
 : end_* BodyFollowUpKeyword Nl* scope #scopeEnsuredFollowUp
 | end_* BodyFollowUpKeyword statement_ #scopeOrBodyFollowUp
 ;
 
-matchStatement
-: Match parenOptStatementMatrix Nl* openBrace_ (expression_ Arrow statement_ end_)* closeBrace_
-;
+matchStatement: Match parenOptStatementMatrix Nl* openBrace_ (expression_ Colon statement_ end_)* closeBrace_;
 
 statement_
 : BodyKeyword parenOptStatementMatrix Nl* scope followUpStatement_? #scopeEnsuredBody
@@ -45,22 +48,24 @@ statement_
 | assignment_ #assignmentStatement_
 | expression_ #expressionStatement_
 | Keyword expression_? #keywordStatement
-| scope #scopeStatement
+| scope #scopeStatement_
 ;
 
+
+/* Identifiers / Assignments ---------------------------------------------------------------------------------------- */
 identifier_
-: identifier_ LessThan identifier_ (Comma? identifier_)* GreaterThan #templatedIdentifier
-| identifier_ openBrace_ expression_ (Comma? expression_)* closeBrace_ #runtimeTemplatedIdentifier
+: identifier_ LessThan identifier_ (Comma identifier_)* GreaterThan #templatedIdentifier
+| identifier_ openBrace_ expression_ (Comma expression_)* closeBrace_ #runtimeTemplatedIdentifier
 | identifier_ DoubleColon identifier_ #nestedIdentifier
-| openParen_ (identifier_ (Comma? identifier_)*)? closeParen_ #tupleIdentifier
+| openParen_ (identifier_ (Comma identifier_)*)? closeParen_ #tupleIdentifier
 | Identifier #rawIdentifier
 | DefaultIdentifier #defaultIdentifier
 ;
 
 declaration : Let Identifier?;
 
-parameter: Identifier (Colon expression_)?;
-parameters: parameter (Comma? parameter)*;
+parameter: expression_ (Colon expression_)?;
+parameters: parameter (Comma parameter)*;
 
 assignment_
 : expression_ AssignOp statement_ #reassignment
@@ -70,39 +75,42 @@ assignment_
 
 specialAssignment_: declaration openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
 
+
+/* Matrix / Tuple --------------------------------------------------------------------------------------------------- */
+// Expression
 unwrappedTuple: expression_ (Comma? expression_)*;
 unwrappedMatrix: unwrappedTuple (end_ unwrappedTuple)*;
 parenWrappedMatrix: openParen_ unwrappedMatrix? closeParen_;
 bracketWrappedMatrix: openBracket_ unwrappedMatrix? closeBracket_;
 
-statementTuple: statement_ (Comma? statement_)*;
-statementMatrix: statementTuple (end_ statementTuple)*;
+// Statement
+statementTuple: statement_ (Comma statement_)*;
+statementMatrix: statementTuple (Semicolon statementTuple)*;
 parenStatementMatrix: openParen_ statementMatrix? closeParen_;
 bracketStatementMatrix: openBracket_ statementMatrix? closeBracket_;
 parenOptStatementMatrix: openParen_ statementMatrix? closeParen_ | statementMatrix;
 
-lambda: Fn (openParen_ parameters? closeParen_)? (Arrow expression_)? (statement_ | scope);
+lambda: Fn (openParen_ parameters? closeParen_) (Arrow expression_)? (statement_ | scope);
 
-/* Expressions */
+/* Expressions ------------------------------------------------------------------------------------------------------ */
 expression_
-
 // Terms
 : identifier_ #identifierExpression
-| LParen expression_ RParen #parenExpression
 | LParen assignment_ RParen #parenAssignmentExpression
 | parenWrappedMatrix #tupleExpression
 | bracketWrappedMatrix #matrixExpression
-| lambda #lambdaExpression
-| expression_ Dot expression_ #dotExpression
+| lambda #lambdaExpression_
+| expression_ Dot expression_ #dotAccessExpression
 | expression_ bracketWrappedMatrix #indexExpression
+| IndexKeyword {isWithinIndexAccess()}? #indexKeywordExpression
 | expression_ parenWrappedMatrix #functionCallExpression
+| expression_ DotDot expression_ (Colon expression_)? #rangeExpression
 | Number #numberExpression
 | String #stringExpression
 | CustomLiteral #customExpression
 
-
 // Arithmetic
-| op=(Not | Min) expression_ #unaryPrefixExpression
+| op=(Not | Min | Tilda) expression_ #unaryPrefixExpression
 | expression_ op=(PlusPlus | MinMin | Question) #unaryPostfixExpression
 | expression_ op=(Pow | PowPow) expression_ #binaryExpression
 | expression_ op=(Mult | Div | Mod | BitOr | BitAnd) expression_ #binaryExpression

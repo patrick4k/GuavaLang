@@ -7,6 +7,8 @@
 
 #include <string>
 #include <any>
+#include <optional>
+#include <vector>
 
 namespace guavalang
 {
@@ -18,6 +20,11 @@ namespace guavalang
     using String = std::string;
     using Any = std::any;
 
+    template<typename T>
+    using Optional = std::optional<T>;
+
+    template<typename T>
+    using Vec = std::vector<T>;
 }
 
 #endif //GUAVA_GUAVA_TYPES_H

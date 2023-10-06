@@ -13,7 +13,7 @@ include_directories(
 )
 
 set(guava_SRC cpp/main.cpp
-        cpp/parsers/GuavaFileVisitor.cpp cpp/parsers/GuavaFileVisitor.h cpp/parsers/IBytecodeBuilder.h cpp/parsers/parser-common.h cpp/guava-common.h cpp/guava-types.h)
+        cpp/parsers/GuavaScriptVisitor.cpp cpp/parsers/GuavaScriptVisitor.h cpp/parsers/IBytecodeBuilder.h cpp/parsers/parser-common.h cpp/guava-common.h cpp/guava-types.h)
 
 if(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set (flags_1 "-Wno-overloaded-virtual")
@@ -29,12 +29,12 @@ foreach(src_file ${guava_SRC})
           )
 endforeach(src_file ${guava_SRC})
 
-add_executable(guava cpp/guava-statics.h cpp/util/util-common.h cpp/util/StringUtility.cpp cpp/util/StringUtility.h cpp/guavabytes/IGuavaByteInstruction.h cpp/guavabytes/GuavaByteCode.cpp cpp/guavabytes/GuavaByteCode.h cpp/parsers/GuavaStatementVisitor.cpp cpp/parsers/GuavaStatementVisitor.h cpp/parsers/generated-common.h)
+add_executable(guava cpp/guava-statics.h cpp/util/util-common.h cpp/util/string-utility.cpp cpp/util/string-utility.h cpp/guavabytes/IGuavaByteInstruction.h cpp/guavabytes/GuavaByteCode.cpp cpp/guavabytes/GuavaByteCode.h cpp/parsers/generated-common.h cpp/parsers/GuavaPredicateParser.cpp cpp/parsers/GuavaPredicateParser.h cpp/error/error-common.h cpp/parsers/templates/Function.cpp cpp/parsers/templates/Function.h cpp/parsers/templates/IDeclaration.h cpp/parsers/templates/IStatement.h cpp/parsers/templates/IType.h cpp/parsers/templates/Parameter.cpp cpp/parsers/templates/Parameter.h)
 GenerateLexer(CommonLexer)
-GenerateParser(StatementParser)
+#GenerateParser(StatementParser)
 GenerateParser(GuavaParser)
 add_dependencies(GuavaParser CommonLexer)
-add_dependencies(StatementParser CommonLexer)
+#add_dependencies(StatementParser CommonLexer)
 
 target_sources(guava PRIVATE ${guava_SRC})
 
