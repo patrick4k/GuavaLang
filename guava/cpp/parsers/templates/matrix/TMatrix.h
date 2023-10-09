@@ -11,6 +11,7 @@
 namespace guavaparser {
     template<typename T>
     class TMatrix {
+    public:
         explicit TMatrix(PVec<TTuple<T>> values) : m_values(values) {}
 
     private:

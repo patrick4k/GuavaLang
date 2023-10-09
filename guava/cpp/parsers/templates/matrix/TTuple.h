@@ -10,10 +10,11 @@
 namespace guavaparser {
     template<typename T>
     class TTuple {
-        explicit TTuple(PVec<T> values) : m_values(values) {}
+    public:
+        explicit TTuple(Vec<T> values) : m_values(values) {}
 
     private:
-        PVec<T> m_values{};
+        Vec<T> m_values{};
     };
 }
 

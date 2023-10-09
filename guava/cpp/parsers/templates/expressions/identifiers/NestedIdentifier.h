@@ -10,7 +10,7 @@
 
 namespace guavaparser {
 
-    class NestedIdentifier: IIdentifier {
+    class NestedIdentifier: public IIdentifier {
     public:
 
         explicit NestedIdentifier(Ptr<IIdentifier> source, Ptr<IIdentifier> target) :

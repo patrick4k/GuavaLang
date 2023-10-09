@@ -32,17 +32,17 @@ namespace guavaparser {
 
         std::any visitSentenceln(GuavaParser::SentencelnContext *ctx) override;
 
-        std::any visitCompoundStatement(GuavaParser::CompoundStatementContext *ctx) override;
+        std::any visitCompoundSentence(GuavaParser::CompoundSentenceContext *ctx) override;
 
-        std::any visitScopeEnsuredFollowUp(GuavaParser::ScopeEnsuredFollowUpContext *ctx) override;
+        std::any visitScopeFollowUp(GuavaParser::ScopeFollowUpContext *ctx) override;
 
-        std::any visitScopeOrBodyFollowUp(GuavaParser::ScopeOrBodyFollowUpContext *ctx) override;
+        std::any visitStatementFollowUp(GuavaParser::StatementFollowUpContext *ctx) override;
 
         std::any visitMatchStatement(GuavaParser::MatchStatementContext *ctx) override;
 
         std::any visitScopeEnsuredBody(GuavaParser::ScopeEnsuredBodyContext *ctx) override;
 
-        std::any visitScopeOrStatmentBody(GuavaParser::ScopeOrStatmentBodyContext *ctx) override;
+        std::any visitScopeOrStatementBody(GuavaParser::ScopeOrStatementBodyContext *ctx) override;
 
         std::any visitKeywordStatement(GuavaParser::KeywordStatementContext *ctx) override;
 
@@ -64,7 +64,7 @@ namespace guavaparser {
 
         std::any visitReassignment(GuavaParser::ReassignmentContext *ctx) override;
 
-        std::any visitDeclaritiveAssignment(GuavaParser::DeclaritiveAssignmentContext *ctx) override;
+        std::any visitDeclarativeAssignment(GuavaParser::DeclarativeAssignmentContext *ctx) override;
 
         std::any visitMultiAssignment(GuavaParser::MultiAssignmentContext *ctx) override;
 
@@ -88,9 +88,7 @@ namespace guavaparser {
 
         std::any visitLambda(GuavaParser::LambdaContext *ctx) override;
 
-        std::any visitUnaryPrefixExpression(GuavaParser::UnaryPrefixExpressionContext *ctx) override;
-
-        std::any visitUnaryPostfixExpression(GuavaParser::UnaryPostfixExpressionContext *ctx) override;
+        std::any visitUnaryExpression(GuavaParser::UnaryExpressionContext *ctx) override;
 
         std::any visitBinaryExpression(GuavaParser::BinaryExpressionContext *ctx) override;
 

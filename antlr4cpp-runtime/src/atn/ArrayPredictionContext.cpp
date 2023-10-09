@@ -26,7 +26,7 @@ namespace {
     // the ctxs are in an ArrayPredictionContext.  If both are null, return true
     // if just one is null, return false. If both are non-null, do comparison.
     if ( lhs == nullptr ) return rhs == nullptr;
-    if ( rhs == nullptr ) return false; // lhs!=null and rhs==null
+    if ( rhs == nullptr ) return false; // m_lhs!=null and rhs==null
     return *lhs == *rhs;                // both nonnull
   }
 

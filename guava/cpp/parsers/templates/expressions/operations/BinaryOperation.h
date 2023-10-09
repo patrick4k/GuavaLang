@@ -14,17 +14,17 @@
 namespace guavaparser {
     class BinaryOperation : public IOperation {
     public:
-        BinaryOperation(Ptr<IExpression> parent, String op, Ptr<IExpression> child) :
-        m_parent(std::move(parent)),
+        BinaryOperation(Ptr<IExpression> lhs, String op, Ptr<IExpression> rhs) :
+        m_lhs(std::move(lhs)),
         m_op(std::move(op)),
-        m_child(std::move(child))
+        m_rhs(std::move(rhs))
         {
         }
 
     private:
-        Ptr<IExpression> m_parent;
+        Ptr<IExpression> m_lhs;
         String m_op;
-        Ptr<IExpression> m_child;
+        Ptr<IExpression> m_rhs;
     };
 }
 

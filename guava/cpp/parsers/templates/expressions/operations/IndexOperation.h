@@ -15,9 +15,9 @@
 namespace guavaparser {
     class IndexOperation : public IOperation {
     public:
-        IndexOperation(Ptr<IExpression> mParent, Ptr<ExpressionMatrix> mIndices) :
-        m_parent(std::move(mParent)),
-        m_indices(std::move(mIndices))
+        IndexOperation(Ptr<IExpression> parent, Ptr<ExpressionMatrix> indices) :
+        m_parent(std::move(parent)),
+        m_indices(std::move(indices))
         {
         }
 

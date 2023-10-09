@@ -37,13 +37,18 @@ namespace guavalang
 #define NewPtr std::make_shared
 
     template<typename T>
+    Optional<String> OptionalLex(T val) {
+        return val ? Optional<String>(val->getText()) : NullOpt;
+    }
+
+    template<typename T>
     inline T Cast(Any any) {
         return std::any_cast<T>(any);
     }
 
     template<typename T>
     inline Ptr<T> PCast(Any any) {
-        return std::any_cast<Ptr<T>>(any);
+        return Cast<Ptr<T>>(any);
     }
 
     template<typename T>

@@ -43,7 +43,7 @@ matchStatement: Match parenOptStatementMatrix Nl* openBrace_ (expression_ Colon 
 
 statement_
 : BodyKeyword parenOptStatementMatrix Nl* scope followUpStatement_? #scopeEnsuredBody
-| BodyKeyword parenStatementMatrix statement_ followUpStatement_? #scopeOrStatmentBody
+| BodyKeyword parenStatementMatrix statement_ followUpStatement_? #scopeOrStatementBody
 | matchStatement #matchStatement_
 | specialAssignment_ #multiAssignmentStatement_
 | assignment_ #assignmentStatement_
@@ -71,7 +71,7 @@ parameters: parameter (Comma parameter)*;
 assignment_
 : Identifier openParen_ parameters closeParen_ AssignOp statement_ #inlineFunctionAssignment
 | expression_ AssignOp statement_ #reassignment
-| declaration_ parameter AssignOp statement_ #declaritiveAssignment
+| declaration_ parameter AssignOp statement_ #declarativeAssignment
 ;
 
 specialAssignment_: declaration_ openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
@@ -111,8 +111,8 @@ expression_
 | CustomLiteral #literalExpression
 
 // Arithmetic
-| op=(Not | Min | Tilda) expression_ #unaryPrefixExpression
-| expression_ op=(PlusPlus | MinMin | Question) #unaryPostfixExpression
+| op=(Not | Min | Tilda) expression_ #unaryExpression
+| expression_ op=(PlusPlus | MinMin | Question) #unaryExpression
 | expression_ op=(Pow | PowPow) expression_ #binaryExpression
 | expression_ op=(Mult | Div | Mod | BitOr | BitAnd) expression_ #binaryExpression
 | expression_ op=(Plus | Min) expression_ #binaryExpression

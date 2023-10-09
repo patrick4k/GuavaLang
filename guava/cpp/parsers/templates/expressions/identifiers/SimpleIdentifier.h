@@ -10,7 +10,7 @@
 
 namespace guavaparser {
 
-    class SimpleIdentifier: IIdentifier {
+    class SimpleIdentifier: public IIdentifier {
     public:
         explicit SimpleIdentifier(String name) : m_name(std::move(name)) {}
 

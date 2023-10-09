@@ -10,7 +10,7 @@
 
 namespace guavaparser {
 
-    class TupleIdentifier: IIdentifier {
+    class TupleIdentifier: public IIdentifier {
     public:
         explicit TupleIdentifier(PVec<IIdentifier> identifiers) : m_identifiers(std::move(identifiers)) {}
 

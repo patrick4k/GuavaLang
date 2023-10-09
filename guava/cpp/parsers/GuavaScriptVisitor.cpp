@@ -43,154 +43,216 @@ std::any GuavaScriptVisitor::visitSentenceCollection(GuavaParser::SentenceCollec
 }
 
 std::any GuavaScriptVisitor::visitSentenceln(GuavaParser::SentencelnContext *ctx) {
-    return GuavaParserBaseVisitor::visitSentenceln(ctx);
+    return visit(ctx->sentence_());
 }
 
-std::any GuavaScriptVisitor::visitCompoundStatement(GuavaParser::CompoundStatementContext *ctx) {
-    return GuavaParserBaseVisitor::visitCompoundStatement(ctx);
+std::any GuavaScriptVisitor::visitCompoundSentence(GuavaParser::CompoundSentenceContext *ctx) {
+    auto sentence = PCast<ISentence>(visit(ctx->sentence_()));
+    auto bodyKeyword = ctx->BodyKeyword()->getText();
+    auto args = PCast<StatementMatrix>(visit(ctx->parenOptStatementMatrix()));
+    auto followUpKeyword = OptionalLex(ctx->BodyFollowUpKeyword());
+    auto statement = PSafeCast<IStatement>(visit(ctx->statement_()));
+    Optional<BodyStatementFollowUp> followUp{};
+    if (followUpKeyword && statement) {
+        followUp = BodyStatementFollowUp(*followUpKeyword, *statement);
+    }
+    return NewPtr<CompoundSentence>(sentence, bodyKeyword, args, followUp);
 }
 
-std::any GuavaScriptVisitor::visitScopeEnsuredFollowUp(GuavaParser::ScopeEnsuredFollowUpContext *ctx) {
-    return GuavaParserBaseVisitor::visitScopeEnsuredFollowUp(ctx);
+std::any GuavaScriptVisitor::visitScopeFollowUp(GuavaParser::ScopeFollowUpContext *ctx) {
+    auto bodyKeyword = ctx->BodyFollowUpKeyword()->getText();
+    auto scope = PCast<ScopeStatement>(visit(ctx->scope()));
+    return NewPtr<BodyStatementFollowUp>(bodyKeyword, scope);
 }
 
-std::any GuavaScriptVisitor::visitScopeOrBodyFollowUp(GuavaParser::ScopeOrBodyFollowUpContext *ctx) {
-    return GuavaParserBaseVisitor::visitScopeOrBodyFollowUp(ctx);
+
+std::any GuavaScriptVisitor::visitStatementFollowUp(GuavaParser::StatementFollowUpContext *ctx) {
+    auto bodyKeyword = ctx->BodyFollowUpKeyword()->getText();
+    auto statement = PCast<IStatement>(visit(ctx->statement_()));
+    return NewPtr<BodyStatementFollowUp>(bodyKeyword, statement);
 }
 
 std::any GuavaScriptVisitor::visitMatchStatement(GuavaParser::MatchStatementContext *ctx) {
-    return GuavaParserBaseVisitor::visitMatchStatement(ctx);
+    // TODO: Implement
+    DEBUGOUT << "Match Statement Not Complete!" << ENDL;
+    return {};
 }
 
 std::any GuavaScriptVisitor::visitScopeEnsuredBody(GuavaParser::ScopeEnsuredBodyContext *ctx) {
-    return GuavaParserBaseVisitor::visitScopeEnsuredBody(ctx);
+    auto bodyKeyword = ctx->BodyKeyword()->getText();
+    auto args = PCast<StatementMatrix>(visit(ctx->parenOptStatementMatrix()));
+    auto scope = PCast<ScopeStatement>(visit(ctx->scope()));
+    auto followUpStatement = PSafeCast<BodyStatementFollowUp>(visit(ctx->followUpStatement_()));
+    return NewPtr<BodyStatement>(bodyKeyword, args, scope, followUpStatement);
 }
 
-std::any GuavaScriptVisitor::visitScopeOrStatmentBody(GuavaParser::ScopeOrStatmentBodyContext *ctx) {
-    return GuavaParserBaseVisitor::visitScopeOrStatmentBody(ctx);
+std::any GuavaScriptVisitor::visitScopeOrStatementBody(GuavaParser::ScopeOrStatementBodyContext *ctx) {
+    auto bodyKeyword = ctx->BodyKeyword()->getText();
+    auto args = PCast<StatementMatrix>(visit(ctx->parenStatementMatrix()));
+    auto statement = PCast<IStatement>(visit(ctx->statement_()));
+    auto followUpStatement = PSafeCast<BodyStatementFollowUp>(visit(ctx->followUpStatement_()));
+    return NewPtr<BodyStatement>(bodyKeyword, args, statement, followUpStatement);
 }
 
 std::any GuavaScriptVisitor::visitKeywordStatement(GuavaParser::KeywordStatementContext *ctx) {
-    return GuavaParserBaseVisitor::visitKeywordStatement(ctx);
+    auto keyword = ctx->Keyword()->getText();
+    auto expression = PCast<IExpression>(visit(ctx->expression_()));
+    return NewPtr<KeywordStatement>(keyword, expression);
 }
 
 std::any GuavaScriptVisitor::visitTupleIdentifier(GuavaParser::TupleIdentifierContext *ctx) {
-    return GuavaParserBaseVisitor::visitTupleIdentifier(ctx);
+    auto identifier = PVecCast<IIdentifier>(vecVisit(ctx->identifier_()));
+    return NewPtr<TupleIdentifier>(identifier);
 }
 
 std::any GuavaScriptVisitor::visitNestedIdentifier(GuavaParser::NestedIdentifierContext *ctx) {
-    return GuavaParserBaseVisitor::visitNestedIdentifier(ctx);
+    auto source = PCast<IIdentifier>(visit(ctx->identifier_(0)));
+    auto target = PCast<IIdentifier>(visit(ctx->identifier_(1)));
+    return NewPtr<NestedIdentifier>(source, target);
 }
 
 std::any GuavaScriptVisitor::visitTemplatedIdentifier(GuavaParser::TemplatedIdentifierContext *ctx) {
-    return GuavaParserBaseVisitor::visitTemplatedIdentifier(ctx);
+    auto identifiers = PVecCast<IIdentifier>(vecVisit(ctx->identifier_()));
+    auto source = identifiers[0];
+    PVec<IIdentifier> args{identifiers.begin() + 1, identifiers.end()};
+    return NewPtr<TemplatedIdentifier>(source, args);
 }
 
 std::any GuavaScriptVisitor::visitDefaultIdentifier(GuavaParser::DefaultIdentifierContext *ctx) {
-    return GuavaParserBaseVisitor::visitDefaultIdentifier(ctx);
+    return NewPtr<DefaultIdentifier>(ctx->DefaultIdentifier()->getText());
 }
 
 std::any GuavaScriptVisitor::visitRuntimeTemplatedIdentifier(GuavaParser::RuntimeTemplatedIdentifierContext *ctx) {
-    return GuavaParserBaseVisitor::visitRuntimeTemplatedIdentifier(ctx);
+    auto source = PCast<IIdentifier>(visit(ctx->identifier_()));
+    auto args = PVecCast<IExpression>(vecVisit(ctx->expression_()));
+    return NewPtr<RuntimeTemplatedIdentifier>(source, args);
 }
 
 std::any GuavaScriptVisitor::visitParameter(GuavaParser::ParameterContext *ctx) {
-    return GuavaParserBaseVisitor::visitParameter(ctx);
+    auto id = PCast<IIdentifier>(visit(ctx->expression_(0)));
+    auto type = PCast<IIdentifier>(visit(ctx->expression_(1)));
+    return NewPtr<Parameter>(id, type);
 }
 
 std::any GuavaScriptVisitor::visitParameters(GuavaParser::ParametersContext *ctx) {
-    return GuavaParserBaseVisitor::visitParameters(ctx);
+    return PVecCast<Parameter>(vecVisit(ctx->parameter()));
 }
 
 std::any GuavaScriptVisitor::visitInlineFunctionAssignment(GuavaParser::InlineFunctionAssignmentContext *ctx) {
-    return GuavaParserBaseVisitor::visitInlineFunctionAssignment(ctx);
+    auto name = ctx->Identifier()->getText();
+    auto parameters = PVecCast<Parameter>(visit(ctx->parameters()));
+    auto value = PCast<IStatement>(visit(ctx->statement_()));
+    return NewPtr<InlineFunctionAssignment>(name, parameters, value);
 }
 
 std::any GuavaScriptVisitor::visitReassignment(GuavaParser::ReassignmentContext *ctx) {
-    return GuavaParserBaseVisitor::visitReassignment(ctx);
+    auto expression = PCast<IExpression>(visit(ctx->expression_()));
+    auto statement = PCast<IStatement>(visit(ctx->statement_()));
+    return NewPtr<Reassignment>(expression, statement);
 }
 
-std::any GuavaScriptVisitor::visitDeclaritiveAssignment(GuavaParser::DeclaritiveAssignmentContext *ctx) {
-    return GuavaParserBaseVisitor::visitDeclaritiveAssignment(ctx);
+std::any GuavaScriptVisitor::visitDeclarativeAssignment(GuavaParser::DeclarativeAssignmentContext *ctx) {
+    auto identifiers = ctx->declaration_()->Identifier();
+    Vec<String> modifiers{};
+    std::transform(identifiers.begin(), identifiers.end(), modifiers.begin(),[](auto id) {
+        return id->getText();
+    });
+    auto parameter = PCast<Parameter>(visit(ctx->parameter()));
+    auto value = PCast<IStatement>(visit(ctx->statement_()));
+    return NewPtr<DeclarativeAssignment>(modifiers, parameter, value);
 }
 
 std::any GuavaScriptVisitor::visitMultiAssignment(GuavaParser::MultiAssignmentContext *ctx) {
-    return GuavaParserBaseVisitor::visitMultiAssignment(ctx);
+    // TODO: Implement
+    DEBUGOUT << "Multi Assignment Not Complete!" << ENDL;
+    return {};
 }
 
 std::any GuavaScriptVisitor::visitUnwrappedTuple(GuavaParser::UnwrappedTupleContext *ctx) {
-    return GuavaParserBaseVisitor::visitUnwrappedTuple(ctx);
+    return NewPtr<ExpressionTuple>(PVecCast<IExpression>(vecVisit(ctx->expression_())));
 }
 
 std::any GuavaScriptVisitor::visitUnwrappedMatrix(GuavaParser::UnwrappedMatrixContext *ctx) {
-    return GuavaParserBaseVisitor::visitUnwrappedMatrix(ctx);
+    return NewPtr<ExpressionMatrix>(PVecCast<ExpressionTuple>(vecVisit(ctx->unwrappedTuple())));
 }
 
 std::any GuavaScriptVisitor::visitParenWrappedMatrix(GuavaParser::ParenWrappedMatrixContext *ctx) {
-    return GuavaParserBaseVisitor::visitParenWrappedMatrix(ctx);
+    return visit(ctx->unwrappedMatrix());
 }
 
 std::any GuavaScriptVisitor::visitBracketWrappedMatrix(GuavaParser::BracketWrappedMatrixContext *ctx) {
-    return GuavaParserBaseVisitor::visitBracketWrappedMatrix(ctx);
+    return visit(ctx->unwrappedMatrix());
 }
 
 std::any GuavaScriptVisitor::visitStatementTuple(GuavaParser::StatementTupleContext *ctx) {
-    return GuavaParserBaseVisitor::visitStatementTuple(ctx);
+    return NewPtr<StatementTuple>(PVecCast<IStatement>(vecVisit(ctx->statement_())));
 }
 
 std::any GuavaScriptVisitor::visitStatementMatrix(GuavaParser::StatementMatrixContext *ctx) {
-    return GuavaParserBaseVisitor::visitStatementMatrix(ctx);
+    return NewPtr<StatementMatrix>(PVecCast<StatementTuple>(vecVisit(ctx->statementTuple())));
 }
 
 std::any GuavaScriptVisitor::visitParenStatementMatrix(GuavaParser::ParenStatementMatrixContext *ctx) {
-    return GuavaParserBaseVisitor::visitParenStatementMatrix(ctx);
+    return visit(ctx->statementMatrix());
 }
 
 std::any GuavaScriptVisitor::visitBracketStatementMatrix(GuavaParser::BracketStatementMatrixContext *ctx) {
-    return GuavaParserBaseVisitor::visitBracketStatementMatrix(ctx);
+    return visit(ctx->statementMatrix());
 }
 
 std::any GuavaScriptVisitor::visitParenOptStatementMatrix(GuavaParser::ParenOptStatementMatrixContext *ctx) {
-    return GuavaParserBaseVisitor::visitParenOptStatementMatrix(ctx);
+    return visit(ctx->statementMatrix());
 }
 
 std::any GuavaScriptVisitor::visitLambda(GuavaParser::LambdaContext *ctx) {
-    return GuavaParserBaseVisitor::visitLambda(ctx);
+    auto parameters = PVecCast<Parameter>(visit(ctx->parameters()));
+    auto returnType = PSafeCast<IExpression>(visit(ctx->expression_()));
+    auto body = PSafeCast<IStatement>(visit(ctx->statement_()));
+    return NewPtr<Lambda>(parameters, returnType, body);
 }
 
-
-std::any GuavaScriptVisitor::visitUnaryPrefixExpression(GuavaParser::UnaryPrefixExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitUnaryPrefixExpression(ctx);
-}
-
-std::any GuavaScriptVisitor::visitUnaryPostfixExpression(GuavaParser::UnaryPostfixExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitUnaryPostfixExpression(ctx);
+std::any GuavaScriptVisitor::visitUnaryExpression(GuavaParser::UnaryExpressionContext *ctx) {
+    auto target = PCast<IExpression>(visit(ctx->expression_()));
+    auto op = ctx->op->getText();
+    return NewPtr<UnaryOperation>(target, op);
 }
 
 std::any GuavaScriptVisitor::visitBinaryExpression(GuavaParser::BinaryExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitBinaryExpression(ctx);
+    auto lhs = PCast<IExpression>(visit(ctx->expression_(0)));
+    auto op = ctx->op->getText();
+    auto rhs = PCast<IExpression>(visit(ctx->expression_(1)));
+    return NewPtr<BinaryOperation>(lhs, op, rhs);
 }
 
 std::any GuavaScriptVisitor::visitFunctionCallExpression(GuavaParser::FunctionCallExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitFunctionCallExpression(ctx);
+    auto target = PCast<IExpression>(visit(ctx->expression_()));
+    auto args = PCast<ExpressionMatrix>(visit(ctx->parenWrappedMatrix()));
+    return NewPtr<FunctionCallExpression>(target, args);
 }
 
 std::any GuavaScriptVisitor::visitRangeExpression(GuavaParser::RangeExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitRangeExpression(ctx);
+    auto start = PCast<IExpression>(visit(ctx->expression_(0)));
+    auto end = PCast<IExpression>(visit(ctx->expression_(1)));
+    auto step = PSafeCast<IExpression>(visit(ctx->expression_(2)));
+    return NewPtr<RangeExpression>(start, end, step);
 }
 
 std::any GuavaScriptVisitor::visitIndexExpression(GuavaParser::IndexExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitIndexExpression(ctx);
+    auto source = PCast<IExpression>(visit(ctx->expression_()));
+    auto args = PCast<ExpressionMatrix>(visit(ctx->bracketWrappedMatrix()));
+    return NewPtr<IndexOperation>(source, args);
 }
 
 std::any GuavaScriptVisitor::visitLiteralExpression(GuavaParser::LiteralExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitLiteralExpression(ctx);
+    return NewPtr<LiteralExpression>(ctx->getText());
 }
 
 std::any GuavaScriptVisitor::visitIndexKeywordExpression(GuavaParser::IndexKeywordExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitIndexKeywordExpression(ctx);
+    return NewPtr<IndexKeyword>(ctx->getText());
 }
 
 std::any GuavaScriptVisitor::visitDotAccessExpression(GuavaParser::DotAccessExpressionContext *ctx) {
-    return GuavaParserBaseVisitor::visitDotAccessExpression(ctx);
+    auto parent = PCast<IExpression>(visit(ctx->expression_(0)));
+    auto child = PCast<IExpression>(visit(ctx->expression_(1)));
+    return NewPtr<DotOperation>(parent, ctx->Dot()->getText(), child);
 }

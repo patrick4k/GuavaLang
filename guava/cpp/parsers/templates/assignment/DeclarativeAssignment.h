@@ -10,7 +10,7 @@
 #include "IAssignment.h"
 
 namespace guavaparser {
-    class DeclarativeAssignment: IAssignment {
+    class DeclarativeAssignment: public IAssignment {
     public:
         DeclarativeAssignment(Vec<String> modifiers, Ptr<Parameter> target, Ptr<IStatement> value) :
                 m_modifiers(std::move(modifiers)),
