@@ -4,6 +4,7 @@
 
 #include "parsers/parser-common.h"
 #include "guava-common.h"
+#include "parsers/templates/Script.h"
 
 using namespace guavalang;
 using namespace guavaparser;
@@ -15,7 +16,7 @@ int main(int argc, char** argv) {
         DEBUGOUT << "Arg " << i << " = " << argv[i] << ENDL;
 
     /* Read File and Create Token Stream */
-    auto input = ANTLRFileStream();
+    ANTLRFileStream input{};
     input.loadFromFile(argv[1]);
     CommonLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
@@ -24,7 +25,7 @@ int main(int argc, char** argv) {
     /* Create and Visit Script Tree */
     GuavaPredicateParser parser(&tokens);
     auto tree = parser.script();
-    auto visitor = std::make_shared<GuavaScriptVisitor>();
-    Any script = visitor->visitScript(tree);
+    GuavaScriptVisitor visitor{};
+    const auto script = PCast<Script>(visitor.visitScript(tree));
     return 0;
 }

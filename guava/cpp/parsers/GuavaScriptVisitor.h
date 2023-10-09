@@ -14,6 +14,8 @@ namespace guavaparser {
         std::any visitScript(GuavaParser::ScriptContext *ctx) override;
 
         std::any visitFnDeclaration(GuavaParser::FnDeclarationContext *ctx) override;
+
+        std::any visitSimpleIdentifier(GuavaParser::SimpleIdentifierContext *ctx) override;
     };
 }
 

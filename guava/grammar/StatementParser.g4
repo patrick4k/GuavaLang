@@ -58,22 +58,22 @@ identifier_
 | identifier_ openBrace_ expression_ (Comma expression_)* closeBrace_ #runtimeTemplatedIdentifier
 | identifier_ DoubleColon identifier_ #nestedIdentifier
 | openParen_ (identifier_ (Comma identifier_)*)? closeParen_ #tupleIdentifier
-| Identifier #rawIdentifier
+| Identifier #simpleIdentifier
 | DefaultIdentifier #defaultIdentifier
 ;
 
-declaration : Let Identifier?;
+declaration_ : Let Identifier*;
 
 parameter: expression_ (Colon expression_)?;
 parameters: parameter (Comma parameter)*;
 
 assignment_
-: expression_ AssignOp statement_ #reassignment
-| Fn Identifier openParen_ parameters closeParen_ AssignOp statement_ #inlineFunctionAssignment
-| declaration parameter AssignOp statement_ #declaritiveAssignment
+: Identifier openParen_ parameters closeParen_ AssignOp statement_ #inlineFunctionAssignment
+| expression_ AssignOp statement_ #reassignment
+| declaration_ parameter AssignOp statement_ #declaritiveAssignment
 ;
 
-specialAssignment_: declaration openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
+specialAssignment_: declaration_ openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
 
 
 /* Matrix / Tuple --------------------------------------------------------------------------------------------------- */
@@ -90,24 +90,24 @@ parenStatementMatrix: openParen_ statementMatrix? closeParen_;
 bracketStatementMatrix: openBracket_ statementMatrix? closeBracket_;
 parenOptStatementMatrix: openParen_ statementMatrix? closeParen_ | statementMatrix;
 
-lambda: Fn (openParen_ parameters? closeParen_) (Arrow expression_)? (statement_ | scope);
+lambda: Fn (openParen_ parameters? closeParen_) (Arrow expression_)? statement_;
 
 /* Expressions ------------------------------------------------------------------------------------------------------ */
 expression_
 // Terms
-: identifier_ #identifierExpression
-| LParen assignment_ RParen #parenAssignmentExpression
-| parenWrappedMatrix #tupleExpression
-| bracketWrappedMatrix #matrixExpression
+: identifier_ #identifierExpression_
+| LParen assignment_ RParen #parenAssignmentExpression_
+| parenWrappedMatrix #tupleExpression_
+| bracketWrappedMatrix #matrixExpression_
 | lambda #lambdaExpression_
 | expression_ Dot expression_ #dotAccessExpression
 | expression_ bracketWrappedMatrix #indexExpression
 | IndexKeyword {isWithinIndexAccess()}? #indexKeywordExpression
 | expression_ parenWrappedMatrix #functionCallExpression
 | expression_ DotDot expression_ (Colon expression_)? #rangeExpression
-| Number #numberExpression
-| String #stringExpression
-| CustomLiteral #customExpression
+| Number #literalExpression
+| String #literalExpression
+| CustomLiteral #literalExpression
 
 // Arithmetic
 | op=(Not | Min | Tilda) expression_ #unaryPrefixExpression

@@ -16,6 +16,9 @@ namespace tree {
     /// The default implementation calls <seealso cref="ParseTree#accept"/> on the
     /// specified tree.
     virtual std::any visit(ParseTree *tree) override {
+        if (tree == nullptr) {
+          return defaultResult();
+        }
       return tree->accept(this);
     }
 
