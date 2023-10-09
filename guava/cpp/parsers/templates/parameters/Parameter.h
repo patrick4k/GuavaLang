@@ -7,7 +7,6 @@
 
 #include <memory>
 #include "../../../guava-types.h"
-#include "../IType.h"
 #include "../expressions/IExpression.h"
 
 using namespace guavalang;

@@ -10,6 +10,7 @@
 #include "../../../guava-types.h"
 #include "IDeclaration.h"
 #include "../statement/IStatement.h"
+#include "../expressions/IExpression.h"
 #include "../parameters/Parameter.h"
 
 using namespace guavalang;
@@ -19,7 +20,7 @@ namespace guavaparser {
     class Function : public IDeclaration {
     public:
 
-        explicit Function(String name, Vec<Parameter> parameters, Optional<Ptr<IType>> returnType, Vec<Ptr<IStatement>> body) :
+        explicit Function(String name, Vec<Parameter> parameters, Optional<Ptr<IExpression>> returnType, Vec<Ptr<IStatement>> body) :
         m_name(std::move(name)),
         m_parameters(std::move(parameters)),
         m_returnType(std::move(returnType)),
@@ -27,26 +28,10 @@ namespace guavaparser {
         {
         }
 
-        [[nodiscard]] const String &getName() const {
-            return m_name;
-        }
-
-        [[nodiscard]] Vec<Ptr<IStatement>> getBody() const {
-            return m_body;
-        }
-
-        [[nodiscard]] const Vec<Parameter> &getParameters() const {
-            return m_parameters;
-        }
-
-        [[nodiscard]] Optional<Ptr<IType>> getReturnType() const {
-            return m_returnType;
-        }
-
     private:
         String m_name{};
         Vec<Parameter> m_parameters{};
-        Optional<Ptr<IType>> m_returnType{};
+        Optional<Ptr<IExpression>> m_returnType{};
         Vec<Ptr<IStatement>> m_body{};
     };
 

@@ -15,12 +15,13 @@ namespace guavaparser {
 
     class InlineFunctionAssignment: IAssignment {
     public:
-        InlineFunctionAssignment(String id, Ptr<IStatement> value) :
+        InlineFunctionAssignment(String id, PVec<Parameter> parameters, Ptr<IStatement> value) :
         {
         }
 
     private:
-        Ptr<IExpression> m_target{};
+        String m_name{};
+        PVec<Parameter> m_parameters{};
         Ptr<IStatement> m_value{};
     };
 

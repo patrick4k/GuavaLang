@@ -6,7 +6,7 @@
 #define GUAVA_ISPECIALASSIGNMENT_H
 
 namespace guavaparser {
-    class ISpecialAssignment {
+    class ISpecialAssignment : public IStatement {
     public:
     };
 }

@@ -5,8 +5,10 @@
 #ifndef GUAVA_ISTATEMENT_H
 #define GUAVA_ISTATEMENT_H
 
+#include "../scentence/IScentence.h"
+
 namespace guavaparser {
-    class IStatement {
+    class IStatement : public IScentence {
     };
 }
 

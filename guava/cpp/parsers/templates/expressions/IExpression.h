@@ -6,7 +6,7 @@
 #define GUAVA_IEXPRESSION_H
 
 namespace guavaparser {
-    class IExpression {
+    class IExpression: public IStatement {
     };
 }
 

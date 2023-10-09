@@ -7,7 +7,6 @@
 
 #include "declaration/IDeclaration.h"
 #include "statement/IStatement.h"
-#include "IType.h"
 #include "declaration/Function.h"
 #include "expressions/identifiers/SimpleIdentifier.h"
 #include "expressions/identifiers/DefaultIdentifier.h"

@@ -26,7 +26,7 @@ scentenceCollection: scentenceln* scentence_?;
 scentenceln : scentence_ end_;
 
 scentence_
-: scentence_ BodyKeyword parenOptStatementMatrix (BodyFollowUpKeyword statement_)? #compoundStatement
+: scentence_ BodyKeyword parenOptStatementMatrix (BodyFollowUpKeyword statement_)? #compoundScentence
 | statement_ #statementScentence_
 ;
 
@@ -34,10 +34,11 @@ scentence_
 /* Statements ------------------------------------------------------------------------------------------------------- */
 
 followUpStatement_
-: end_* BodyFollowUpKeyword Nl* scope #scopeEnsuredFollowUp
-| end_* BodyFollowUpKeyword statement_ #scopeOrBodyFollowUp
+: end_* BodyFollowUpKeyword Nl* scope #scopeFollowUp
+| end_* BodyFollowUpKeyword statement_ #statementFollowUp
 ;
 
+// TODO: Needs review
 matchStatement: Match parenOptStatementMatrix Nl* openBrace_ (expression_ Colon statement_ end_)* closeBrace_;
 
 statement_

@@ -9,7 +9,7 @@
 
 namespace guavaparser {
 
-        class IAssignment {
+        class IAssignment : public IStatement {
         };
 }
 

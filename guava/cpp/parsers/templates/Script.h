@@ -13,27 +13,17 @@ namespace guavaparser {
     class Script {
     public:
         Script() = default;
-        Script(PVec<Function> functions, PVec<IType> types) : m_functions(std::move(functions)), m_types(std::move(types)) {}
-
-        [[nodiscard]] const PVec<Function>& getFunctions() const {
-            return m_functions;
-        }
-
-        [[nodiscard]] const PVec<IType>& getTypes() const {
-            return m_types;
+        Script(PVec<Function> functions) :
+        m_functions(std::move(functions))
+        {
         }
 
         void add(Ptr<Function> function) {
-            m_functions.push_back(std::move(function));
-        }
-
-        void add(Ptr<IType> type) {
-            m_types.push_back(std::move(type));
+            m_functions.push_back(function);
         }
 
     private:
         PVec<Function> m_functions{};
-        PVec<IType> m_types{};
     };
 }
 

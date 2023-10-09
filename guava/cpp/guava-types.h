@@ -56,6 +56,11 @@ namespace guavalang
     }
 
     template<typename T>
+    inline Optional<Ptr<T>> PSafeCast(Any any) {
+        return SafeCast<Ptr<T>>(any);
+    }
+
+    template<typename T>
     inline Vec<T> VecCast(Any any) {
         if (auto retVal = SafeCast<Vec<T>>(any)) {
             return *retVal;
