@@ -6,10 +6,10 @@
 #define GUAVA_VEC_UTIL_H
 
 #include "../guava-common.h"
+
 template<typename T>
-Vec<T> Concat(const Vec<T>& a, const Vec<T>& b) {
-    auto c = a;
-    c.emplac_back(b.begin(), b.end());
-    return c;
+Vec<T> Concat(Vec<T> a, const Vec<T>& b) {
+    a.insert(a.end(), b.begin(), b.end());
+    return a;
 }
 #endif //GUAVA_VEC_UTIL_H

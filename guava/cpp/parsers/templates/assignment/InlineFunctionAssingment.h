@@ -16,6 +16,9 @@ namespace guavaparser {
     class InlineFunctionAssignment: IAssignment {
     public:
         InlineFunctionAssignment(String id, PVec<Parameter> parameters, Ptr<IStatement> value) :
+        m_name(std::move(id)),
+        m_parameters(std::move(parameters)),
+        m_value(std::move(value))
         {
         }
 

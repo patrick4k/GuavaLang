@@ -6,6 +6,7 @@
 #define GUAVA_IASSIGNMENT_H
 
 #include "../expressions/IExpression.h"
+#include "../statement/IStatement.h"
 
 namespace guavaparser {
 

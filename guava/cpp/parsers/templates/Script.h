@@ -12,14 +12,9 @@
 namespace guavaparser {
     class Script {
     public:
-        Script() = default;
         Script(PVec<Function> functions) :
         m_functions(std::move(functions))
         {
-        }
-
-        void add(Ptr<Function> function) {
-            m_functions.push_back(function);
         }
 
     private:

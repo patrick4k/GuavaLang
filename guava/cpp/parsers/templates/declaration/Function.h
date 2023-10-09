@@ -20,7 +20,7 @@ namespace guavaparser {
     class Function : public IDeclaration {
     public:
 
-        explicit Function(String name, Vec<Parameter> parameters, Optional<Ptr<IExpression>> returnType, Vec<Ptr<IStatement>> body) :
+        explicit Function(String name, PVec<Parameter> parameters, Optional<Ptr<IExpression>> returnType, PVec<IStatement> body) :
         m_name(std::move(name)),
         m_parameters(std::move(parameters)),
         m_returnType(std::move(returnType)),
@@ -30,9 +30,9 @@ namespace guavaparser {
 
     private:
         String m_name{};
-        Vec<Parameter> m_parameters{};
+        PVec<Parameter> m_parameters{};
         Optional<Ptr<IExpression>> m_returnType{};
-        Vec<Ptr<IStatement>> m_body{};
+        PVec<IStatement> m_body{};
     };
 
 }

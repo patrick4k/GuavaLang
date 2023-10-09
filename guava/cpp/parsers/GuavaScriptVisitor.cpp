@@ -6,22 +6,22 @@
 #include "GuavaScriptVisitor.h"
 
 #include "templates/templates-common.h"
+#include "../util/vec-util.h"
 
 using namespace guavaparser;
 
-std::any guavaparser::GuavaScriptVisitor::visitScript(guavaparser::GuavaParser::ScriptContext *ctx) {
+std::any GuavaScriptVisitor::visitScript(GuavaParser::ScriptContext *ctx) {
     DEBUGOUT << "Visiting Script" << ENDL;
-    const auto script = NewPtr<Script>();
+    PVec<Function> functions{};
     for (const auto declarationCtx : ctx->fnDeclaration()) {
-        const auto declaration = PCast<Function>(visit(declarationCtx));
-        script->add(declaration);
+        functions.emplace_back(PCast<Function>(visit(declarationCtx)));
     }
-    return script;
+    return NewPtr<Script>(functions);
 }
 
-std::any guavaparser::GuavaScriptVisitor::visitFnDeclaration(guavaparser::GuavaParser::FnDeclarationContext *ctx) {
+std::any GuavaScriptVisitor::visitFnDeclaration(GuavaParser::FnDeclarationContext *ctx) {
     const auto name = ctx->Identifier()->getText();
-    const auto parameters = VecCast<Parameter>(visit(ctx->parameters()));
+    const auto parameters = PVecCast<Parameter>(visit(ctx->parameters()));
     const auto returnType = SafeCast<Ptr<IExpression>>(visit(ctx->expression_()));
     const auto body = PVecCast<IStatement>(visit(ctx->scope()));
     return NewPtr<Function>(name, parameters, returnType, body);
@@ -32,13 +32,14 @@ std::any GuavaScriptVisitor::visitSimpleIdentifier(GuavaParser::SimpleIdentifier
 }
 
 std::any GuavaScriptVisitor::visitScope(GuavaParser::ScopeContext *ctx) {
-    return GuavaParserBaseVisitor::visitScope(ctx);
+    const auto scentences = PVecCast<IScentence>(visit(ctx->scentenceCollection()));
+    return NewPtr<ScopeStatement>(scentences);
 }
 
 std::any GuavaScriptVisitor::visitScentenceCollection(GuavaParser::ScentenceCollectionContext *ctx) {
-    auto scentenceln = PVecCast<IScentence>(visitVec(ctx->scentenceln()));
-    auto scentence = PSafeCast<IScentence>(visit(ctx->scentence_()));
-    return GuavaParserBaseVisitor::visitScentenceCollection(ctx);
+    auto scentenceln = PVecCast<IScentence>(vecVisit(ctx->scentenceln()));
+    auto scentence = PVecCast<IScentence>(visit(ctx->scentence_()));
+    return Concat(scentenceln, scentence);
 }
 
 std::any GuavaScriptVisitor::visitScentenceln(GuavaParser::ScentencelnContext *ctx) {

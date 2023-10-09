@@ -12,7 +12,7 @@ namespace guavaparser {
     class GuavaScriptVisitor: public GuavaParserBaseVisitor, public IBytecodeBuilder {
     public:
         template<typename T>
-        std::any visitVec(std::vector<T*> trees) {
+        std::any vecVisit(std::vector<T*> trees) {
             std::vector<std::any> retVal{trees.size()};
             for (unsigned long i = 0; i < trees.size(); ++i) {
                 retVal[i] = visit(trees[i]);

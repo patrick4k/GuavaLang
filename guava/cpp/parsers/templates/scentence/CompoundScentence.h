@@ -5,22 +5,24 @@
 #ifndef GUAVA_COMPOUNDSCENTENCE_H
 #define GUAVA_COMPOUNDSCENTENCE_H
 
+#include <utility>
+
 #include "../../../guava-common.h"
 #include "../statement/IStatement.h"
 #include "IScentence.h"
 #include "../matrix/StatementTupleAndMatrix.h"
-#include "../follow-up/BodyStatementFollowUp.h"
+#include "../statement/BodyStatementFollowUp.h"
 
 namespace guavaparser {
 
-public:
     class CompoundScentence : public IScentence {
-        CompoundScentence(Ptr<IScentence> scentence, String bodyKeyword, Ptr<StatementMatrix> args, Optional<BodyStatementFollowUp> followUp) :
-        m_scentence(scentence),
-        m_bodyKeyword(bodyKeyword),
-        m_args(args),
-        m_followUp(followUp)
-        {
+    public:
+        CompoundScentence(Ptr<IScentence> scentence, String bodyKeyword, Ptr<StatementMatrix> args,
+                          Optional<BodyStatementFollowUp> followUp) :
+                m_scentence(std::move(scentence)),
+                m_bodyKeyword(std::move(bodyKeyword)),
+                m_args(std::move(args)),
+                m_followUp(std::move(followUp)) {
         }
 
     private:
@@ -29,5 +31,6 @@ public:
         Ptr<StatementMatrix> m_args{};
         Optional<BodyStatementFollowUp> m_followUp{};
     };
+}
 
 #endif //GUAVA_COMPOUNDSCENTENCE_H

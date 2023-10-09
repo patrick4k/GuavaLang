@@ -65,6 +65,9 @@ namespace guavalang
         if (auto retVal = SafeCast<Vec<T>>(any)) {
             return *retVal;
         }
+        else if (auto retValOpt = SafeCast<T>(any)) {
+            return Vec<T>{*retValOpt};
+        }
         return Vec<T>();
     }
 

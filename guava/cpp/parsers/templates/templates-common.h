@@ -5,11 +5,14 @@
 #ifndef GUAVA_TEMPLATES_COMMON_H
 #define GUAVA_TEMPLATES_COMMON_H
 
-#include "declaration/IDeclaration.h"
-#include "statement/IStatement.h"
-#include "declaration/Function.h"
-#include "expressions/identifiers/SimpleIdentifier.h"
-#include "expressions/identifiers/DefaultIdentifier.h"
+#include "assignment/assignment-export.h"
+#include "declaration/declaration-export.h"
+#include "expressions/expression-export.h"
+#include "matrix/matrix-export.h"
+#include "parameters/parameter-export.h"
+#include "scentence/scentence-export.h"
+#include "special-assignment/special-assignment-export.h"
+#include "statement/statement-export.h"
 #include "Script.h"
 
 #endif //GUAVA_TEMPLATES_COMMON_H

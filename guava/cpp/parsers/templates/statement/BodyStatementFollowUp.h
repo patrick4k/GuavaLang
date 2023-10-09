@@ -6,14 +6,14 @@
 #define GUAVA_BODYSTATEMENTFOLLOWUP_H
 
 #include "../../../guava-common.h"
-#include "../statement/IStatement.h"
+#include "IStatement.h"
 
 namespace guavaparser {
     class BodyStatementFollowUp {
     public:
-        StatementFollowUp(String bodyFollowUpKeyword, Ptr<IStatement> statement) :
-        m_bodyFollowUpKeyword(bodyFollowUpKeyword),
-        m_statement(statement)
+        BodyStatementFollowUp(String bodyFollowUpKeyword, Ptr<IStatement> statement) :
+        m_bodyFollowUpKeyword(std::move(bodyFollowUpKeyword)),
+        m_statement(std::move(statement))
         {
         }
 

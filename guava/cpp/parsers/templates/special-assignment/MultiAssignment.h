@@ -23,7 +23,7 @@ namespace guavaparser {
     private:
         Vec<String> m_modifiers{};
         PVec<IAssignment> m_assignments{};
-    }
+    };
 }
 
 #endif //GUAVA_MULTIASSIGNMENT_H

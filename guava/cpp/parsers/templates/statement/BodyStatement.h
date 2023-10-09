@@ -8,7 +8,7 @@
 #include "../../../guava-common.h"
 #include "IStatement.h"
 #include "../matrix/StatementTupleAndMatrix.h"
-#include "../follow-up/BodyStatementFollowUp.h"
+#include "BodyStatementFollowUp.h"
 
 namespace guavaparser {
     class BodyStatement: public IStatement {

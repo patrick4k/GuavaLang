@@ -13,7 +13,7 @@
 #include "../../matrix/ExpressionTupleAndMatrix.h"
 
 namespace guavaparser {
-    class IndexOperation : public IUnaryOperation {
+    class IndexOperation : public IOperation {
     public:
         IndexOperation(Ptr<IExpression> mParent, Ptr<ExpressionMatrix> mIndices) :
         m_parent(std::move(mParent)),
