@@ -10,7 +10,7 @@
 #include "expressions/expression-export.h"
 #include "matrix/matrix-export.h"
 #include "parameters/parameter-export.h"
-#include "scentence/scentence-export.h"
+#include "sentence/sentence-export.h"
 #include "special-assignment/special-assignment-export.h"
 #include "statement/statement-export.h"
 #include "Script.h"

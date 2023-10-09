@@ -32,18 +32,18 @@ std::any GuavaScriptVisitor::visitSimpleIdentifier(GuavaParser::SimpleIdentifier
 }
 
 std::any GuavaScriptVisitor::visitScope(GuavaParser::ScopeContext *ctx) {
-    const auto scentences = PVecCast<IScentence>(visit(ctx->scentenceCollection()));
-    return NewPtr<ScopeStatement>(scentences);
+    const auto sentences = PVecCast<ISentence>(visit(ctx->sentenceCollection()));
+    return NewPtr<ScopeStatement>(sentences);
 }
 
-std::any GuavaScriptVisitor::visitScentenceCollection(GuavaParser::ScentenceCollectionContext *ctx) {
-    auto scentenceln = PVecCast<IScentence>(vecVisit(ctx->scentenceln()));
-    auto scentence = PVecCast<IScentence>(visit(ctx->scentence_()));
-    return Concat(scentenceln, scentence);
+std::any GuavaScriptVisitor::visitSentenceCollection(GuavaParser::SentenceCollectionContext *ctx) {
+    auto sentenceln = PVecCast<ISentence>(vecVisit(ctx->sentenceln()));
+    auto sentence = PVecCast<ISentence>(visit(ctx->sentence_()));
+    return Concat(sentenceln, sentence);
 }
 
-std::any GuavaScriptVisitor::visitScentenceln(GuavaParser::ScentencelnContext *ctx) {
-    return GuavaParserBaseVisitor::visitScentenceln(ctx);
+std::any GuavaScriptVisitor::visitSentenceln(GuavaParser::SentencelnContext *ctx) {
+    return GuavaParserBaseVisitor::visitSentenceln(ctx);
 }
 
 std::any GuavaScriptVisitor::visitCompoundStatement(GuavaParser::CompoundStatementContext *ctx) {

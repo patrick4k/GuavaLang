@@ -10,13 +10,13 @@
 namespace guavaparser {
     class ScopeStatement: public IStatement {
     public:
-        ScopeStatement(PVec<IScentence> scentences) :
-        m_scentences(scentences)
+        ScopeStatement(PVec<ISentence> sentences) :
+        m_sentences(sentences)
         {
         }
 
     private:
-        PVec<IScentence> m_scentences;
+        PVec<ISentence> m_sentences;
     };
 }
 

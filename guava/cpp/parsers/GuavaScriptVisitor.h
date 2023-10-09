@@ -28,9 +28,9 @@ namespace guavaparser {
 
         std::any visitScope(GuavaParser::ScopeContext *ctx) override;
 
-        std::any visitScentenceCollection(GuavaParser::ScentenceCollectionContext *ctx) override;
+        std::any visitSentenceCollection(GuavaParser::SentenceCollectionContext *ctx) override;
 
-        std::any visitScentenceln(GuavaParser::ScentencelnContext *ctx) override;
+        std::any visitSentenceln(GuavaParser::SentencelnContext *ctx) override;
 
         std::any visitCompoundStatement(GuavaParser::CompoundStatementContext *ctx) override;
 

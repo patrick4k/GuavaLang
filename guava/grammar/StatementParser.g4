@@ -18,16 +18,16 @@ openBracket_: LBracket Nl*;
 closeBracket_: Nl* RBracket;
 
 
-/* Scentences ------------------------------------------------------------------------------------------------------- */
+/* Sentences ------------------------------------------------------------------------------------------------------- */
 
-scope: openBrace_ scentenceCollection closeBrace_;
-scentenceCollection: scentenceln* scentence_?;
+scope: openBrace_ sentenceCollection closeBrace_;
+sentenceCollection: sentenceln* sentence_?;
 
-scentenceln : scentence_ end_;
+sentenceln : sentence_ end_;
 
-scentence_
-: scentence_ BodyKeyword parenOptStatementMatrix (BodyFollowUpKeyword statement_)? #compoundScentence
-| statement_ #statementScentence_
+sentence_
+: sentence_ BodyKeyword parenOptStatementMatrix (BodyFollowUpKeyword statement_)? #compoundSentence
+| statement_ #statementSentence_
 ;
 
 
