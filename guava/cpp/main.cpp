@@ -26,6 +26,6 @@ int main(int argc, char** argv) {
     GuavaPredicateParser parser(&tokens);
     auto tree = parser.script();
     GuavaScriptVisitor visitor{};
-    const auto script = PCast<Script>(visitor.visitScript(tree));
+    const auto script = PAnyCast<Script>(visitor.visitScript(tree));
     return 0;
 }

@@ -6,10 +6,11 @@
 #define GUAVA_TTUPLE_H
 
 #include "../../../guava-common.h"
+#include "../IAstTemplate.h"
 
 namespace guavaparser {
     template<typename T>
-    class TTuple {
+    class TTuple : public IAstTemplate {
     public:
         explicit TTuple(Vec<T> values) : m_values(values) {}
 

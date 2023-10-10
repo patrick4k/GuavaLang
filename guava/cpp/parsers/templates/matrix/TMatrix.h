@@ -10,7 +10,7 @@
 
 namespace guavaparser {
     template<typename T>
-    class TMatrix {
+    class TMatrix : public IAstTemplate {
     public:
         explicit TMatrix(PVec<TTuple<T>> values) : m_values(values) {}
 

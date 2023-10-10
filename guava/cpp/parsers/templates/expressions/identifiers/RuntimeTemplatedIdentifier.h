@@ -11,7 +11,7 @@
 
 namespace guavaparser {
 
-    class RuntimeTemplatedIdentifier: IIdentifier {
+    class RuntimeTemplatedIdentifier: public IIdentifier {
     public:
         explicit RuntimeTemplatedIdentifier(Ptr<IIdentifier> source, PVec<IExpression> templateArguments) :
         m_source(std::move(source)),

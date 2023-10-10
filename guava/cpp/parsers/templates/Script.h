@@ -10,7 +10,7 @@
 #include "../../guava-common.h"
 
 namespace guavaparser {
-    class Script {
+    class Script : public IAstTemplate {
     public:
         Script(PVec<Function> functions) :
         m_functions(std::move(functions))

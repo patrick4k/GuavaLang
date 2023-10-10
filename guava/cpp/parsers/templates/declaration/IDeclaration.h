@@ -5,9 +5,11 @@
 #ifndef GUAVA_IDECLARATION_H
 #define GUAVA_IDECLARATION_H
 
+#include "../IAstTemplate.h"
+
 namespace guavaparser {
 
-class IDeclaration {
+class IDeclaration : public IAstTemplate {
 
     };
 

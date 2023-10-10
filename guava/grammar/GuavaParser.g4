@@ -1,5 +1,9 @@
 parser grammar GuavaParser;
 
+@parser::header {
+#include "../cpp/generated-include.h"
+}
+
 @parser::members {
 }
 

@@ -42,19 +42,19 @@ namespace guavalang
     }
 
     template<typename T>
-    inline T Cast(Any any) {
+    inline T AnyCast(Any any) {
         return std::any_cast<T>(any);
     }
 
     template<typename T>
-    inline Ptr<T> PCast(Any any) {
-        return Cast<Ptr<T>>(any);
+    inline Ptr<T> PAnyCast(Any any) {
+        return AnyCast<Ptr<T>>(any);
     }
 
     template<typename T>
-    inline Optional<T> SafeCast(Any any) {
+    inline Optional<T> SafeAnyCast(Any any) {
         try {
-            return Cast<T>(any);
+            return AnyCast<T>(any);
         } catch (const std::bad_any_cast& e) {
             return std::nullopt;
         }
@@ -62,15 +62,15 @@ namespace guavalang
 
     template<typename T>
     inline Optional<Ptr<T>> PSafeCast(Any any) {
-        return SafeCast<Ptr<T>>(any);
+        return SafeAnyCast<Ptr<T>>(any);
     }
 
     template<typename T>
     inline Vec<T> VecCast(Any any) {
-        if (auto retVal = SafeCast<Vec<T>>(any)) {
+        if (auto retVal = SafeAnyCast<Vec<T>>(any)) {
             return *retVal;
         }
-        else if (auto retValOpt = SafeCast<T>(any)) {
+        else if (auto retValOpt = SafeAnyCast<T>(any)) {
             return Vec<T>{*retValOpt};
         }
         return Vec<T>();

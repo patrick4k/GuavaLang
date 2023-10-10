@@ -5,8 +5,10 @@
 #ifndef GUAVA_ISENTENCE_H
 #define GUAVA_ISENTENCE_H
 
+#include "../IAstTemplate.h"
+
 namespace guavaparser {
-    class ISentence {
+    class ISentence : public IAstTemplate {
     };
 }
 
