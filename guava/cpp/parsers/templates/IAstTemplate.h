@@ -7,6 +7,8 @@
 
 namespace guavaparser {
     class IAstTemplate {
+    public:
+        virtual ~IAstTemplate() = default;
     };
 }
 

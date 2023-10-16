@@ -6,7 +6,7 @@
 #define GUAVA_PARAMETER_H
 
 #include <memory>
-#include "../../../guava-types.h"
+#include "../../../guava-common.h"
 #include "../expressions/IExpression.h"
 
 using namespace guavalang;

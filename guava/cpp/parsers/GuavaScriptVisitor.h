@@ -10,16 +10,13 @@
 
 namespace guavaparser {
     class GuavaScriptVisitor: public GuavaParserBaseVisitor, public IBytecodeBuilder {
-    public:
         template<typename T>
-        std::any vecVisit(std::vector<T*> trees) {
-            std::vector<std::any> retVal{trees.size()};
-            for (unsigned long i = 0; i < trees.size(); ++i) {
-                retVal[i] = visit(trees[i]);
-            }
-            return retVal;
-        }
+        std::any vecVisit(std::vector<T*> trees);
 
+        template<typename T, typename Ctx>
+        PVec<T> vecVisitCast(std::vector<Ctx*> trees);
+
+    public:
         std::any visitScript(GuavaParser::ScriptContext *ctx) override;
 
         std::any visitFnDeclaration(GuavaParser::FnDeclarationContext *ctx) override;

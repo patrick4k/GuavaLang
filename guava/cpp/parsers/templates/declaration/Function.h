@@ -11,7 +11,7 @@
 #include "IDeclaration.h"
 #include "../statement/IStatement.h"
 #include "../expressions/IExpression.h"
-#include "../parameters/Parameter.h"
+#include "../parameters/Parameters.h"
 
 using namespace guavalang;
 
@@ -20,7 +20,7 @@ namespace guavaparser {
     class Function : public IDeclaration {
     public:
 
-        explicit Function(String name, PVec<Parameter> parameters, Optional<Ptr<IExpression>> returnType, PVec<IStatement> body) :
+        explicit Function(String name, Ptr<Parameters> parameters, Optional<Ptr<IExpression>> returnType, PVec<IStatement> body) :
         m_name(std::move(name)),
         m_parameters(std::move(parameters)),
         m_returnType(std::move(returnType)),
@@ -30,7 +30,7 @@ namespace guavaparser {
 
     private:
         String m_name{};
-        PVec<Parameter> m_parameters{};
+        Ptr<Parameters> m_parameters{};
         Optional<Ptr<IExpression>> m_returnType{};
         PVec<IStatement> m_body{};
     };

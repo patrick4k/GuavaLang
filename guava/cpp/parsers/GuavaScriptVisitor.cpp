@@ -4,13 +4,32 @@
 
 #include "../guava-common.h"
 #include "GuavaScriptVisitor.h"
-
+#include "parser-util.h"
 #include "templates/templates-common.h"
 #include "../util/vec-util.h"
 
 using namespace guavaparser;
 
 #define ret(type, args) return AnyTemplate(NewPtr<type>args);
+
+
+template<typename T>
+std::any GuavaScriptVisitor::vecVisit(std::vector<T*> trees) {
+    Vec<Any> retVal{trees.size()};
+    for (unsigned long i = 0; i < trees.size(); ++i) {
+        retVal[i] = visit(trees[i]);
+    }
+    return retVal;
+}
+
+template<typename T, typename Ctx>
+PVec<T> GuavaScriptVisitor::vecVisitCast(std::vector<Ctx*> trees) {
+    PVec<T> retVal{trees.size()};
+    for (unsigned long i = 0; i < trees.size(); ++i) {
+        retVal[i] = PAnyCast<T>(visit(trees[i]));
+    }
+    return retVal;
+}
 
 std::any GuavaScriptVisitor::visitScript(GuavaParser::ScriptContext *ctx) {
     DEBUGOUT << "Visiting Script" << ENDL;
@@ -23,8 +42,8 @@ std::any GuavaScriptVisitor::visitScript(GuavaParser::ScriptContext *ctx) {
 
 std::any GuavaScriptVisitor::visitFnDeclaration(GuavaParser::FnDeclarationContext *ctx) {
     const auto name = ctx->Identifier()->getText();
-    const auto parameters = PVecCast<Parameter>(visit(ctx->parameters()));
-    const auto returnType = SafeAnyCast<Ptr<IExpression>>(visit(ctx->expression_()));
+    const auto parameters = PAnyCast<Parameters>(visit(ctx->parameters()));
+    const auto returnType = PSafeCast<IExpression>(visit(ctx->expression_()));
     const auto body = PVecCast<IStatement>(visit(ctx->scope()));
     ret(Function,(name, parameters, returnType, body))
 }
@@ -137,7 +156,7 @@ std::any GuavaScriptVisitor::visitParameter(GuavaParser::ParameterContext *ctx) 
 }
 
 std::any GuavaScriptVisitor::visitParameters(GuavaParser::ParametersContext *ctx) {
-    return PVecCast<Parameter>(vecVisit(ctx->parameter()));
+    return vecVisit(ctx->parameter());
 }
 
 std::any GuavaScriptVisitor::visitInlineFunctionAssignment(GuavaParser::InlineFunctionAssignmentContext *ctx) {
@@ -207,7 +226,7 @@ std::any GuavaScriptVisitor::visitParenOptStatementMatrix(GuavaParser::ParenOptS
 }
 
 std::any GuavaScriptVisitor::visitLambda(GuavaParser::LambdaContext *ctx) {
-    auto parameters = PVecCast<Parameter>(visit(ctx->parameters()));
+    auto parameters = PAnyCast<Parameters>(visit(ctx->parameters()));
     auto returnType = PSafeCast<IExpression>(visit(ctx->expression_()));
     auto body = PSafeCast<IStatement>(visit(ctx->statement_()));
     ret(Lambda,(parameters, returnType, body))
@@ -258,3 +277,4 @@ std::any GuavaScriptVisitor::visitDotAccessExpression(GuavaParser::DotAccessExpr
     auto child = PAnyCast<IExpression>(visit(ctx->expression_(1)));
     ret(DotOperation,(parent, ctx->Dot()->getText(), child))
 }
+
