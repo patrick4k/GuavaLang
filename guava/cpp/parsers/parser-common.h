@@ -8,5 +8,6 @@
 #include "generated-common.h"
 #include "GuavaParserBaseVisitor.h"
 #include "GuavaScriptVisitor.h"
+#include "parser-util.h"
 
 #endif //GUAVA_PARSER_COMMON_H

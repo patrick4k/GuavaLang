@@ -6,16 +6,16 @@
 #define GUAVA_PARAMETER_H
 
 #include <memory>
-#include "../../../guava-types.h"
+#include "../../../guava-common.h"
 #include "../expressions/IExpression.h"
 
 using namespace guavalang;
 
 namespace guavaparser {
 
-    class Parameter {
+    class Parameter : public IAstTemplate {
     public:
-        explicit Parameter(Ptr<IExpression> id, Ptr<IExpression> type) :
+        explicit Parameter(Ptr<IExpression> id, Optional<Ptr<IExpression>> type) :
         m_id(std::move(id)),
         m_type(std::move(type))
         {
@@ -23,7 +23,7 @@ namespace guavaparser {
 
     private:
         Ptr<IExpression> m_id{};
-        Ptr<IExpression> m_type{};
+        Optional<Ptr<IExpression>> m_type{};
     };
 }
 

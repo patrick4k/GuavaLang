@@ -5,6 +5,8 @@
 #ifndef GUAVA_TEMPLATES_COMMON_H
 #define GUAVA_TEMPLATES_COMMON_H
 
+#include "IAstTemplate.h"
+#include "AnyTemplate.h"
 #include "assignment/assignment-export.h"
 #include "declaration/declaration-export.h"
 #include "expressions/expression-export.h"

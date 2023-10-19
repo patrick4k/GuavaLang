@@ -35,51 +35,6 @@ namespace guavalang
     using PVec = std::vector<Ptr<T>>;
 
 #define NewPtr std::make_shared
-
-    template<typename T>
-    Optional<String> OptionalLex(T val) {
-        return val ? Optional<String>(val->getText()) : NullOpt;
-    }
-
-    template<typename T>
-    inline T Cast(Any any) {
-        return std::any_cast<T>(any);
-    }
-
-    template<typename T>
-    inline Ptr<T> PCast(Any any) {
-        return Cast<Ptr<T>>(any);
-    }
-
-    template<typename T>
-    inline Optional<T> SafeCast(Any any) {
-        try {
-            return Cast<T>(any);
-        } catch (const std::bad_any_cast& e) {
-            return std::nullopt;
-        }
-    }
-
-    template<typename T>
-    inline Optional<Ptr<T>> PSafeCast(Any any) {
-        return SafeCast<Ptr<T>>(any);
-    }
-
-    template<typename T>
-    inline Vec<T> VecCast(Any any) {
-        if (auto retVal = SafeCast<Vec<T>>(any)) {
-            return *retVal;
-        }
-        else if (auto retValOpt = SafeCast<T>(any)) {
-            return Vec<T>{*retValOpt};
-        }
-        return Vec<T>();
-    }
-
-    template<typename T>
-    inline PVec<T> PVecCast(Any any) {
-        return VecCast<Ptr<T>>(any);
-    }
 }
 
 #endif //GUAVA_GUAVA_TYPES_H

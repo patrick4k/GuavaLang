@@ -12,7 +12,7 @@
 
 namespace guavaparser {
 
-    class Reassignment: IAssignment {
+    class Reassignment: public IAssignment {
     public:
         Reassignment(Ptr<IExpression> target, Ptr<IStatement> value) :
                 m_target(std::move(target)),

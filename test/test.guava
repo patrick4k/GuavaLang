@@ -1,3 +1,4 @@
-main {
-    list()
+int main(args) {
+    cout << 10 * 2 + pi << endl if boolTrue else die()
+    return 0
 }

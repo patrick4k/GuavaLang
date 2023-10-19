@@ -10,12 +10,13 @@
 #include "IAssignment.h"
 #include "../expressions/IExpression.h"
 #include "../statement/IStatement.h"
+#include "../parameters/Parameters.h"
 
 namespace guavaparser {
 
-    class InlineFunctionAssignment: IAssignment {
+    class InlineFunctionAssignment: public IAssignment {
     public:
-        InlineFunctionAssignment(String id, PVec<Parameter> parameters, Ptr<IStatement> value) :
+        InlineFunctionAssignment(String id, Ptr<Parameters> parameters, Ptr<IStatement> value) :
         m_name(std::move(id)),
         m_parameters(std::move(parameters)),
         m_value(std::move(value))
@@ -24,7 +25,7 @@ namespace guavaparser {
 
     private:
         String m_name{};
-        PVec<Parameter> m_parameters{};
+        Ptr<Parameters> m_parameters{};
         Ptr<IStatement> m_value{};
     };
 

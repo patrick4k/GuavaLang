@@ -20,8 +20,7 @@ closeBracket_: Nl* RBracket;
 
 /* Sentences ------------------------------------------------------------------------------------------------------- */
 
-scope: openBrace_ sentenceCollection closeBrace_;
-sentenceCollection: sentenceln* sentence_?;
+scope: openBrace_ sentenceln* sentence_? closeBrace_;
 
 sentenceln : sentence_ end_;
 
@@ -65,13 +64,13 @@ identifier_
 
 declaration_ : Let Identifier*;
 
-parameter: expression_ (Colon expression_)?;
+parameter: identifier_ (Colon expression_)?;
 parameters: parameter (Comma parameter)*;
 
 assignment_
 : Identifier openParen_ parameters closeParen_ AssignOp statement_ #inlineFunctionAssignment
 | expression_ AssignOp statement_ #reassignment
-| declaration_ parameter AssignOp statement_ #declarativeAssignment
+| declaration_ parameter (AssignOp statement_)? #declarativeAssignment
 ;
 
 specialAssignment_: declaration_ openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
@@ -83,6 +82,7 @@ unwrappedTuple: expression_ (Comma? expression_)*;
 unwrappedMatrix: unwrappedTuple (end_ unwrappedTuple)*;
 parenWrappedMatrix: openParen_ unwrappedMatrix? closeParen_;
 bracketWrappedMatrix: openBracket_ unwrappedMatrix? closeBracket_;
+braceWrappedMatrix: openBrace_ unwrappedMatrix? closeBrace_;
 
 // Statement
 statementTuple: statement_ (Comma statement_)*;
@@ -97,15 +97,15 @@ lambda: Fn (openParen_ parameters? closeParen_) (Arrow expression_)? statement_;
 expression_
 // Terms
 : identifier_ #identifierExpression_
+| IndexKeyword {isWithinIndexAccess()}? #indexKeywordExpression
 | LParen assignment_ RParen #parenAssignmentExpression_
+| expression_ Dot expression_ #dotAccessExpression
+| expression_ parenWrappedMatrix #functionCallExpression
+| expression_ DotDot expression_ (Colon expression_)? #rangeExpression
+| expression_ bracketWrappedMatrix #indexExpression
 | parenWrappedMatrix #tupleExpression_
 | bracketWrappedMatrix #matrixExpression_
 | lambda #lambdaExpression_
-| expression_ Dot expression_ #dotAccessExpression
-| expression_ bracketWrappedMatrix #indexExpression
-| IndexKeyword {isWithinIndexAccess()}? #indexKeywordExpression
-| expression_ parenWrappedMatrix #functionCallExpression
-| expression_ DotDot expression_ (Colon expression_)? #rangeExpression
 | Number #literalExpression
 | String #literalExpression
 | CustomLiteral #literalExpression
