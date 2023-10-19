@@ -20,8 +20,7 @@ closeBracket_: Nl* RBracket;
 
 /* Sentences ------------------------------------------------------------------------------------------------------- */
 
-scope: openBrace_ sentenceCollection closeBrace_;
-sentenceCollection: sentenceln* sentence_?;
+scope: openBrace_ sentenceln* sentence_? closeBrace_;
 
 sentenceln : sentence_ end_;
 
@@ -65,13 +64,13 @@ identifier_
 
 declaration_ : Let Identifier*;
 
-parameter: expression_ (Colon expression_)?;
+parameter: identifier_ (Colon expression_)?;
 parameters: parameter (Comma parameter)*;
 
 assignment_
 : Identifier openParen_ parameters closeParen_ AssignOp statement_ #inlineFunctionAssignment
 | expression_ AssignOp statement_ #reassignment
-| declaration_ parameter AssignOp statement_ #declarativeAssignment
+| declaration_ parameter (AssignOp statement_)? #declarativeAssignment
 ;
 
 specialAssignment_: declaration_ openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;

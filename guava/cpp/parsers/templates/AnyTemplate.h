@@ -17,7 +17,7 @@ namespace guavaparser {
         }
 
         template<typename T>
-        Ptr<T> as() {
+        Ptr<T> as() const {
             return std::dynamic_pointer_cast<T>(m_ptr);
         }
 

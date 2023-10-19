@@ -11,7 +11,7 @@
 namespace guavaparser {
     class Lambda : public IExpression {
     public:
-        Lambda(Ptr<Parameters> parameters, Optional<Ptr<IExpression>> returnType, Optional<Ptr<IStatement>> body) :
+        Lambda(Ptr<Parameters> parameters, Optional<Ptr<IExpression>> returnType, Ptr<IStatement> body) :
                 m_parameters(std::move(parameters)),
                 m_returnType(std::move(returnType)),
                 m_body(std::move(body))
@@ -21,7 +21,7 @@ namespace guavaparser {
     private:
         Ptr<Parameters> m_parameters{};
         Optional<Ptr<IExpression>> m_returnType{};
-        Optional<Ptr<IStatement>> m_body{};
+        Ptr<IStatement> m_body{};
     };
 }
 

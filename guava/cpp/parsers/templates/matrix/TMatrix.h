@@ -12,6 +12,12 @@ namespace guavaparser {
     template<typename T>
     class TMatrix : public IAstTemplate {
     public:
+        TMatrix() = default;
+        explicit TMatrix(Optional<Ptr<TMatrix<T>>> matrix) {
+            if (matrix) {
+                m_values = (*matrix)->m_values;
+            }
+        }
         explicit TMatrix(PVec<TTuple<T>> values) : m_values(values) {}
 
     private:

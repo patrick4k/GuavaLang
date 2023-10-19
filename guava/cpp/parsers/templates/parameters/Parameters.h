@@ -11,13 +11,14 @@
 namespace guavaparser {
     class Parameters : public IAstTemplate {
     public:
-        explicit Parameters(std::vector<Ptr<Parameter>> parameters) :
+        Parameters() = default;
+        explicit Parameters(PVec<Parameter> parameters) :
                 m_parameters(std::move(parameters))
         {
         }
 
     private:
-        std::vector<Ptr<Parameter>> m_parameters{};
+        PVec<Parameter> m_parameters{};
     };
 }
 

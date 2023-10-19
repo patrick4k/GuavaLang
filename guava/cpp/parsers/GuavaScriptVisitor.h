@@ -7,14 +7,44 @@
 
 #include "GuavaParserBaseVisitor.h"
 #include "IBytecodeBuilder.h"
+#include "parser-util.h"
+#include "templates/parameters/Parameters.h"
 
 namespace guavaparser {
     class GuavaScriptVisitor: public GuavaParserBaseVisitor, public IBytecodeBuilder {
+    private:
         template<typename T>
-        std::any vecVisit(std::vector<T*> trees);
+        Optional<Ptr<T>> AnyVisit(antlr4::tree::ParseTree* tree, Optional<Ptr<T>> defaultVal = NullOpt) {
+            if (!tree) return defaultVal;
+            const AnyTemplate any = std::any_cast<AnyTemplate>(visit(tree));
+            return any.as<T>();
+        }
+
+        Ptr<Parameters> AnyVisit(GuavaParser::ParametersContext* tree) {
+            if (!tree) return NewPtr<Parameters>();
+            const AnyTemplate any = std::any_cast<AnyTemplate>(visit(tree));
+            return any.as<Parameters>();
+        }
 
         template<typename T, typename Ctx>
-        PVec<T> vecVisitCast(std::vector<Ctx*> trees);
+        PVec<T> AnyVisit(Vec<Ctx*> tree) {
+            PVec<T> retVal{};
+            for (auto it : tree) {
+                if (auto inst = AnyVisit<T>(it)) {
+                    retVal.push_back(*inst);
+                }
+            }
+            return retVal;
+        }
+
+        virtual std::any aggregateResult(std::any aggregate, std::any nextResult) override {
+            try {
+                std::any_cast<AnyTemplate>(nextResult);
+            } catch (const std::bad_any_cast& e) {
+                return aggregate;
+            }
+            return nextResult;
+        }
 
     public:
         std::any visitScript(GuavaParser::ScriptContext *ctx) override;
@@ -24,10 +54,6 @@ namespace guavaparser {
         std::any visitSimpleIdentifier(GuavaParser::SimpleIdentifierContext *ctx) override;
 
         std::any visitScope(GuavaParser::ScopeContext *ctx) override;
-
-        std::any visitSentenceCollection(GuavaParser::SentenceCollectionContext *ctx) override;
-
-        std::any visitSentenceln(GuavaParser::SentencelnContext *ctx) override;
 
         std::any visitCompoundSentence(GuavaParser::CompoundSentenceContext *ctx) override;
 

@@ -12,7 +12,7 @@
 namespace guavaparser {
     class DeclarativeAssignment: public IAssignment {
     public:
-        DeclarativeAssignment(Vec<String> modifiers, Ptr<Parameter> target, Ptr<IStatement> value) :
+        DeclarativeAssignment(Vec<String> modifiers, Ptr<Parameter> target, Optional<Ptr<IStatement>> value) :
                 m_modifiers(std::move(modifiers)),
                 m_target(std::move(target)),
                 m_value(std::move(value))
@@ -21,7 +21,7 @@ namespace guavaparser {
     private:
         Vec<String> m_modifiers{};
         Ptr<Parameter> m_target{};
-        Ptr<IStatement> m_value{};
+        Optional<Ptr<IStatement>> m_value{};
     };
 }
 
