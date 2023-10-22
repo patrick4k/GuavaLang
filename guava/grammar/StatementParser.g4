@@ -89,6 +89,7 @@ statementTuple: statement_ (Comma statement_)*;
 statementMatrix: statementTuple (Semicolon statementTuple)*;
 parenStatementMatrix: openParen_ statementMatrix? closeParen_;
 bracketStatementMatrix: openBracket_ statementMatrix? closeBracket_;
+braceStatementMatrix: openBrace_ statementMatrix? closeBrace_;
 parenOptStatementMatrix: openParen_ statementMatrix? closeParen_ | statementMatrix;
 
 lambda: Fn (openParen_ parameters? closeParen_) (Arrow expression_)? statement_;
@@ -103,6 +104,7 @@ expression_
 | expression_ parenWrappedMatrix #functionCallExpression
 | expression_ DotDot expression_ (Colon expression_)? #rangeExpression
 | expression_ bracketWrappedMatrix #indexExpression
+| expression_ braceStatementMatrix #typeInstantiationExpression
 | parenWrappedMatrix #tupleExpression_
 | bracketWrappedMatrix #matrixExpression_
 | lambda #lambdaExpression_

@@ -16,4 +16,6 @@ import StatementParser;
 
 script: (fnDeclaration)* EOF;
 
-fnDeclaration: expression_? identifier_ (openParen_ parameters? closeParen_)? Nl* scope;
+fnDeclaration
+: expression_? identifier_ (openParen_ parameters? closeParen_)? Nl? statement_ Nl*
+;

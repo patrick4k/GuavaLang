@@ -1,10 +1,14 @@
 #[[
-function(GenerateParser)
+macro(GenerateParser)
 Will search for ${ParserName}Lexer.g4 and ${ParserName}Parser.g4 in /guava/grammar directory.
 If found will generate antlr lexer, parser and visitor files in /guava/generated directory.
+
+executable "guava" is required to exist before macro call
+list "guava_SRC" is required to exist before macro call
 ]]
 
-function(GenerateParser ParserName)
+macro(GenerateParser ParserName)
+    set(PARENT_SCOPE)
     set(guava-GENERATED_SRC
             ${PROJECT_SOURCE_DIR}/guava/generated/${ParserName}.cpp
             ${PROJECT_SOURCE_DIR}/guava/generated/${ParserName}BaseListener.cpp
@@ -13,18 +17,20 @@ function(GenerateParser ParserName)
             ${PROJECT_SOURCE_DIR}/guava/generated/${ParserName}Visitor.cpp
             )
     GenerateAntlr(${ParserName})
-endfunction(GenerateParser)
+endmacro(GenerateParser)
 
 
-function(GenerateLexer LexerName)
+macro(GenerateLexer LexerName)
+    set(PARENT_SCOPE)
     set(guava-GENERATED_SRC
             ${PROJECT_SOURCE_DIR}/guava/generated/${LexerName}.cpp
             )
     GenerateAntlr(${LexerName})
-endfunction(GenerateLexer)
+endmacro(GenerateLexer)
 
 
-function(GenerateAntlr ParserName)
+macro(GenerateAntlr ParserName)
+    set(PARENT_SCOPE)
     foreach(src_file ${guava-GENERATED_SRC})
         set_source_files_properties(
                 ${src_file}
@@ -52,6 +58,6 @@ function(GenerateAntlr ParserName)
     endforeach(src_file ${guava-GENERATED_SRC})
 
     add_dependencies(guava ${ParserName})
-    target_sources(guava PRIVATE ${guava-GENERATED_SRC})
+    list(APPEND guava_SRC ${guava-GENERATED_SRC})
 
-endfunction(GenerateAntlr)
+endmacro(GenerateAntlr)

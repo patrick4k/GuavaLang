@@ -6,12 +6,11 @@
 #define GUAVA_GUAVASCRIPTVISITOR_H
 
 #include "GuavaParserBaseVisitor.h"
-#include "IBytecodeBuilder.h"
 #include "parser-util.h"
 #include "templates/parameters/Parameters.h"
 
 namespace guavaparser {
-    class GuavaScriptVisitor: public GuavaParserBaseVisitor, public IBytecodeBuilder {
+    class GuavaScriptVisitor: public GuavaParserBaseVisitor {
     private:
         template<typename T>
         Optional<Ptr<T>> AnyVisit(antlr4::tree::ParseTree* tree, Optional<Ptr<T>> defaultVal = NullOpt) {
@@ -47,6 +46,8 @@ namespace guavaparser {
         }
 
     public:
+        std::any visitTypeInstantiationExpression(GuavaParser::TypeInstantiationExpressionContext *ctx) override;
+
         std::any visitScript(GuavaParser::ScriptContext *ctx) override;
 
         std::any visitFnDeclaration(GuavaParser::FnDeclarationContext *ctx) override;

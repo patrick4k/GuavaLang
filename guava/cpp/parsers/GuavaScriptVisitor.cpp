@@ -32,7 +32,7 @@ std::any GuavaScriptVisitor::visitFnDeclaration(GuavaParser::FnDeclarationContex
     const auto name = *AnyVisit<IIdentifier>(ctx->identifier_());
     const auto parameters = *AnyVisit<Parameters>(ctx->parameters(), NewPtr<Parameters>());
     const auto returnType = AnyVisit<IExpression>(ctx->expression_());
-    const auto body = *AnyVisit<IStatement>(ctx->scope());
+    const auto body = *AnyVisit<IStatement>(ctx->statement_());
     RET_NEW(Function, (name, parameters, returnType, body))
 }
 
@@ -265,4 +265,10 @@ std::any GuavaScriptVisitor::visitDotAccessExpression(GuavaParser::DotAccessExpr
     auto parent = *AnyVisit<IExpression>(ctx->expression_(0));
     auto child = *AnyVisit<IExpression>(ctx->expression_(1));
     RET_NEW(DotOperation, (parent, Lex(ctx->Dot()), child))
+}
+
+std::any GuavaScriptVisitor::visitTypeInstantiationExpression(GuavaParser::TypeInstantiationExpressionContext *ctx) {
+    const auto type = *AnyVisit<IExpression>(ctx->expression_());
+    const auto overloads = *AnyVisit<StatementMatrix>(ctx->braceStatementMatrix(), NewPtr<StatementMatrix>());
+    RET_NEW(TypeInstantiation, (type, overloads))
 }

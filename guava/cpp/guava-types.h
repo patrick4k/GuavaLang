@@ -6,19 +6,19 @@
 #define GUAVA_GUAVA_TYPES_H
 
 #include <string>
-#include <any>
 #include <optional>
 #include <vector>
 #include <memory>
+#include <map>
+
+#define NullOpt std::nullopt
+#define NewPtr std::make_shared
+
 
 namespace guavalang
 {
-    using Any = std::any;
-
     template<typename T>
     using Optional = std::optional<T>;
-    using None = std::nullopt_t;
-#define NullOpt std::nullopt
 
     using String = std::string;
 
@@ -34,7 +34,15 @@ namespace guavalang
     template<typename T>
     using PVec = std::vector<Ptr<T>>;
 
-#define NewPtr std::make_shared
+    template<typename T>
+    using Map = std::map<String, T>;
+
+    template<typename T>
+    using PMap = std::map<String, Ptr<T>>;
+
+    template<typename T, typename R>
+    using Map2 = std::map<T, std::map<T, R>>;
+
 }
 
 #endif //GUAVA_GUAVA_TYPES_H

@@ -24,6 +24,7 @@
 #include "misc-terms/MatrixExpression.h"
 #include "misc-terms/RangeExpression.h"
 #include "misc-terms/TupleExpression.h"
+#include "misc-terms/TypeInstantiation.h"
 
 #include "operations/IOperation.h"
 #include "operations/BinaryOperation.h"
