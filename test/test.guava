@@ -1,5 +1,0 @@
-int main(args: Vec<String>) {
-    let apple = Apple {
-        color = 'green'
-    }
-}

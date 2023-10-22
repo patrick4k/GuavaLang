@@ -96,9 +96,8 @@ Keyword
 | 'last'
 ;
 
-IndexKeyword
-: 'start'
-| 'end'
+IndexKeyword //  TODO: Consider removing?
+: 'end'
 ;
 
 Let: 'let';

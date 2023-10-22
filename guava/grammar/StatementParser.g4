@@ -17,9 +17,7 @@ closeParen_: Nl* RParen;
 openBracket_: LBracket Nl*;
 closeBracket_: Nl* RBracket;
 
-
 /* Sentences ------------------------------------------------------------------------------------------------------- */
-
 scope: openBrace_ sentenceln* sentence_? closeBrace_;
 
 sentenceln : sentence_ end_;
@@ -29,9 +27,7 @@ sentence_
 | statement_ #statementSentence_
 ;
 
-
 /* Statements ------------------------------------------------------------------------------------------------------- */
-
 followUpStatement_
 : end_* BodyFollowUpKeyword Nl* scope #scopeFollowUp
 | end_* BodyFollowUpKeyword statement_ #statementFollowUp
@@ -50,7 +46,6 @@ statement_
 | Keyword expression_? #keywordStatement
 | scope #scopeStatement_
 ;
-
 
 /* Identifiers / Assignments ---------------------------------------------------------------------------------------- */
 identifier_
@@ -74,7 +69,6 @@ assignment_
 ;
 
 specialAssignment_: declaration_ openBrace_ assignment_ (end_ assignment_)* closeBrace_ #multiAssignment;
-
 
 /* Matrix / Tuple --------------------------------------------------------------------------------------------------- */
 // Expression
@@ -113,7 +107,7 @@ expression_
 | CustomLiteral #literalExpression
 
 // Arithmetic
-| op=(Not | Min | Tilda) expression_ #unaryExpression
+| op=(Not | Min) expression_ #unaryExpression
 | expression_ op=(PlusPlus | MinMin | Question) #unaryExpression
 | expression_ op=(Pow | PowPow) expression_ #binaryExpression
 | expression_ op=(Mult | Div | Mod | BitOr | BitAnd) expression_ #binaryExpression
