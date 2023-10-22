@@ -107,7 +107,7 @@ expression_
 | CustomLiteral #literalExpression
 
 // Arithmetic
-| op=(Not | Min) expression_ #unaryExpression
+| op=(Not | Min | PlusMin) expression_ #unaryExpression
 | expression_ op=(PlusPlus | MinMin | Question) #unaryExpression
 | expression_ op=(Pow | PowPow) expression_ #binaryExpression
 | expression_ op=(Mult | Div | Mod | BitOr | BitAnd) expression_ #binaryExpression

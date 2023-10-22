@@ -18,6 +18,10 @@ namespace guavalang::types {
             return NullOpt;
         }
 
+        Optional<UnaryFunction> unary_op_plusmin(IGuavaType *rhs) override {
+            return NullOpt;
+        }
+
         Optional<UnaryFunction> unary_op_min(IGuavaType *rhs) override {
             return NullOpt;
         }

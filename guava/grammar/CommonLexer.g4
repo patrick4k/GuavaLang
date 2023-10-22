@@ -35,6 +35,7 @@ Mod: '%' | '%%';
 BitOr: '|' | '||';
 BitAnd: '&' | '&&';
 
+PlusMin: '+-' | '-+';
 Plus: '+';
 PlusPlus: '++';
 Min: '-';

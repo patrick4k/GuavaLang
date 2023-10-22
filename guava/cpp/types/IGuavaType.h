@@ -23,6 +23,9 @@ namespace guavalang::types {
         /* Unary */
         using UnaryFunction = std::function<IVariable*(IVariable*)>;
 
+        // +-rhs, -+rhs
+        virtual Optional<UnaryFunction> unary_op_plusmin(IGuavaType* rhs) = 0;
+
         // -rhs
         virtual Optional<UnaryFunction> unary_op_min(IGuavaType* rhs) = 0;
 
