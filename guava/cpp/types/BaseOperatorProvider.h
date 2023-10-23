@@ -14,123 +14,123 @@ namespace guavalang::types {
             return NullOpt;
         }
 
-        Optional<RangeOperationFunction> range_operation(IType *start, IType *end, Optional<IType *> iteration) override {
+        Optional<RangeOperationFunction> range_operation(IGuavaType *start, IGuavaType *end, Optional<IGuavaType *> iteration) override {
             return NullOpt;
         }
 
-        Optional<UnaryFunction> unary_op_plusmin(IType */*rhs*/) override {
+        Optional<UnaryFunction> unary_op_plusmin(IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<UnaryFunction> unary_op_min(IType */*rhs*/) override {
+        Optional<UnaryFunction> unary_op_min(IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<UnaryFunction> unary_op_not(IType */*rhs*/) override {
+        Optional<UnaryFunction> unary_op_not(IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<UnaryFunction> unary_op_plusplus(IType */*lhs*/) override {
+        Optional<UnaryFunction> unary_op_plusplus(IGuavaType */*lhs*/) override {
             return NullOpt;
         }
 
-        Optional<UnaryFunction> unary_op_minmin(IType */*lhs*/) override {
+        Optional<UnaryFunction> unary_op_minmin(IGuavaType */*lhs*/) override {
             return NullOpt;
         }
 
-        Optional<UnaryFunction> unary_op_question(IType */*lhs*/) override {
+        Optional<UnaryFunction> unary_op_question(IGuavaType */*lhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_bracket(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_bracket(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_pow(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_pow(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_powpow(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_powpow(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_mult(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_mult(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_multmult(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_multmult(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_div(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_div(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_divdiv(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_divdiv(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_mod(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_mod(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_modmod(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_modmod(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_plus(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_plus(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_min(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_min(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_or(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_or(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_oror(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_oror(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_and(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_and(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_andand(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_andand(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_eqeq(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_eqeq(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_neq(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_neq(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_lt(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_lt(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_gt(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_gt(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_lteq(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_lteq(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_gteq(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_gteq(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_streamin(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_streamin(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
 
-        Optional<BinaryFunction> binary_op_streamout(IType */*lhs*/, IType */*rhs*/) override {
+        Optional<BinaryFunction> binary_op_streamout(IGuavaType */*lhs*/, IGuavaType */*rhs*/) override {
             return NullOpt;
         }
     };

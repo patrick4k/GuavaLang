@@ -6,7 +6,7 @@
 #define GUAVA_ITYPEMEMBER_H
 
 #include "../guava-types.h"
-#include "IType.h"
+#include "IGuavaType.h"
 #include "Instance.h"
 
 namespace guavalang::types {
@@ -17,7 +17,7 @@ namespace guavalang::types {
 
     private:
         String m_id;
-        Ptr<IType> m_type;
+        Ptr<IGuavaType> m_type;
         Optional<Instance> m_initialValue;
     };
 

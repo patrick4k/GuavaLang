@@ -41,7 +41,7 @@ NEW_TEST(overloaded_link) {
 
 #include "shared/overloaded_link_shared.h"
 
-class Child : public IType {
+class Child : public IGuavaType {
 public:
     explicit Child(double num) : num(num) {}
     double num;
@@ -51,8 +51,8 @@ public:
 
 class ChildHandler: public ITypeHandler {
 public:
-    double double_mod(IType *a, IType *b) override {
-        std::cout << "ChildHandler::double_mod(IType*, IType*)" << std::endl;
+    double double_mod(IGuavaType *a, IGuavaType *b) override {
+        std::cout << "ChildHandler::double_mod(IGuavaType*, IGuavaType*)" << std::endl;
         if (auto *a_cast = dynamic_cast<Child*>(a))
             if (auto *b_cast = dynamic_cast<Child*>(b))
                 return double_mod(a_cast, b_cast);
@@ -69,7 +69,7 @@ extern "C" __declspec(dllexport) ITypeHandler* create_handler() {
     return new ChildHandler();
 }
 
-extern "C" __declspec(dllexport) IType* create_type(double num) {
+extern "C" __declspec(dllexport) IGuavaType* create_type(double num) {
     return new Child(num);
 }
 

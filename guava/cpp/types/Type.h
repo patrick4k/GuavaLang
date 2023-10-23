@@ -5,15 +5,30 @@
 #ifndef GUAVA_TYPE_H
 #define GUAVA_TYPE_H
 
-#include "IType.h"
+#include "IGuavaType.h"
+#include "ITypeMember.h"
 
 namespace guavalang::types {
 
-    template<typename TOperatorProvider>
-    class Type : public IType {
-        Type(): IType(NewPtr<TOperatorProvider>()) {}
-    };
+    class IOperatorProvider;
 
+    class Type : public IGuavaType {
+    public:
+        Optional<InstanceConstructor> constructor_from(PVec<IGuavaType> arg_types) override {
+            return NullOpt;
+        }
+
+        Optional<IOperatorProvider*> GetOperatorProvider() override {
+            if (auto op_provider = dynamic_cast<IOperatorProvider*>(this)) {
+                return op_provider;
+            }
+            return NullOpt;
+        }
+
+    protected:
+        Optional<Ptr<IGuavaType>> m_parentType{};
+        PVec<ITypeMember> m_members{};
+    };
 }
 
 #endif //GUAVA_TYPE_H

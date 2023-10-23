@@ -7,12 +7,10 @@
 #include "guava-common.h"
 #include "parsers/templates/Script.h"
 #include "util/dynamic-library-loader/dynamic-linker-export.h"
-#include "intermediate-representation/TypeDeclaration.h"
 
 using namespace guavalang;
 using namespace guavaparser;
 using namespace antlr4;
-using namespace intermediate;
 
 int main(int argc, char** argv) {
     DEBUGOUT << "Starting Guava" << ENDL;

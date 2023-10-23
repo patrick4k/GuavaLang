@@ -5,16 +5,16 @@
 #ifndef GUAVA_INSTANCE_H
 #define GUAVA_INSTANCE_H
 
-#include "IType.h"
+#include "IGuavaType.h"
 #include "IDataProvider.h"
 #include "IOperatorProvider.h"
 
 namespace guavalang::types {
     class Instance {
     public:
-        Instance(Ptr<IType> type, Ptr<IDataProvider> dataProvider) : m_type(std::move(type)), m_dataProvider(std::move(dataProvider)) {}
+        Instance(Ptr<IGuavaType> type, Ptr<IDataProvider> dataProvider) : m_type(std::move(type)), m_dataProvider(std::move(dataProvider)) {}
 
-        [[nodiscard]] const Ptr<IType> &getType() const {
+        [[nodiscard]] const Ptr<IGuavaType> &getType() const {
             return m_type;
         }
 
@@ -23,7 +23,7 @@ namespace guavalang::types {
         }
 
     private:
-        Ptr<IType> m_type;
+        Ptr<IGuavaType> m_type;
         Ptr<IDataProvider> m_dataProvider;
     };
 }

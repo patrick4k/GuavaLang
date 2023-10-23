@@ -7,4 +7,6 @@
 
 #define PARSE_ERROR(msg) throw std::runtime_error(msg)
 
+#define NOT_IMPLEMENTED throw std::runtime_error("Not Implemented!");
+
 #endif //GUAVA_ERROR_COMMON_H

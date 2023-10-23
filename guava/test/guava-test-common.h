@@ -12,7 +12,7 @@
 #define TEST_RESULT int
 #define PASS return 0;
 #define FAIL return 1;
-#define RESULT(x) return (x? 0: 1);
+#define RESULT(x) if (x) return 0; else { FAIL_MSG(at #x) }
 
 #define TEST_DIR(path) (String(R"(..\..\guava\test\)") + String(#path))
 //#define TEST_DIR(path) (String(R"(../../guava/test/)") + String(#path))

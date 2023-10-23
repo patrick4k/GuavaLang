@@ -5,9 +5,15 @@
 #ifndef GUAVA_IOPERATORPROVIDER_H
 #define GUAVA_IOPERATORPROVIDER_H
 
-#include "IType.h"
+#include "../guava-common.h"
+#include "IGuavaType.h"
+#include "IPropertyProvider.h"
+#include "Instance.h"
 
 namespace guavalang::types {
+
+    class Instance;
+
     class IOperatorProvider: public IPropertyProvider {
     public:
         /* Misc */
@@ -15,104 +21,104 @@ namespace guavalang::types {
         virtual Optional<FromStringFunction> from_string() = 0;
 
         using RangeOperationFunction = std::function<Instance(Instance, Instance, Optional<Instance>)>;
-        virtual Optional<RangeOperationFunction> range_operation(IType* start, IType* end, Optional<IType*> iteration) = 0;
+        virtual Optional<RangeOperationFunction> range_operation(IGuavaType* start, IGuavaType* end, Optional<IGuavaType*> iteration) = 0;
 
         /* Unary */
         using UnaryFunction = std::function<Instance(Instance)>;
 
         // +-rhs, -+rhs
-        virtual Optional<UnaryFunction> unary_op_plusmin(IType* rhs) = 0;
+        virtual Optional<UnaryFunction> unary_op_plusmin(IGuavaType* rhs) = 0;
 
         // -rhs
-        virtual Optional<UnaryFunction> unary_op_min(IType* rhs) = 0;
+        virtual Optional<UnaryFunction> unary_op_min(IGuavaType* rhs) = 0;
 
         // !rhs
-        virtual Optional<UnaryFunction> unary_op_not(IType* rhs) = 0;
+        virtual Optional<UnaryFunction> unary_op_not(IGuavaType* rhs) = 0;
 
         // lhs++
-        virtual Optional<UnaryFunction> unary_op_plusplus(IType* lhs) = 0;
+        virtual Optional<UnaryFunction> unary_op_plusplus(IGuavaType* lhs) = 0;
 
         // lhs--
-        virtual Optional<UnaryFunction> unary_op_minmin(IType* lhs) = 0;
+        virtual Optional<UnaryFunction> unary_op_minmin(IGuavaType* lhs) = 0;
 
         // lhs?
-        virtual Optional<UnaryFunction> unary_op_question(IType* lhs) = 0;
+        virtual Optional<UnaryFunction> unary_op_question(IGuavaType* lhs) = 0;
 
         /* Binary */
         using BinaryFunction = std::function<Instance(Instance, Instance)>;
 
         // lhs[rhs]
-        virtual Optional<BinaryFunction> binary_op_bracket(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_bracket(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs ^ rhs
-        virtual Optional<BinaryFunction> binary_op_pow(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_pow(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs ^^ rhs
-        virtual Optional<BinaryFunction> binary_op_powpow(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_powpow(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs * rhs
-        virtual Optional<BinaryFunction> binary_op_mult(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_mult(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs ** rhs
-        virtual Optional<BinaryFunction> binary_op_multmult(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_multmult(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs / rhs
-        virtual Optional<BinaryFunction> binary_op_div(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_div(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs // rhs
-        virtual Optional<BinaryFunction> binary_op_divdiv(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_divdiv(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs % rhs
-        virtual Optional<BinaryFunction> binary_op_mod(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_mod(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs %% rhs
-        virtual Optional<BinaryFunction> binary_op_modmod(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_modmod(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs + rhs
-        virtual Optional<BinaryFunction> binary_op_plus(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_plus(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs - rhs
-        virtual Optional<BinaryFunction> binary_op_min(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_min(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs | rhs
-        virtual Optional<BinaryFunction> binary_op_or(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_or(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs || rhs
-        virtual Optional<BinaryFunction> binary_op_oror(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_oror(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs & rhs
-        virtual Optional<BinaryFunction> binary_op_and(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_and(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs && rhs
-        virtual Optional<BinaryFunction> binary_op_andand(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_andand(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs == rhs
-        virtual Optional<BinaryFunction> binary_op_eqeq(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_eqeq(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs != rhs
-        virtual Optional<BinaryFunction> binary_op_neq(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_neq(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs < rhs
-        virtual Optional<BinaryFunction> binary_op_lt(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_lt(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs > rhs
-        virtual Optional<BinaryFunction> binary_op_gt(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_gt(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs <= rhs
-        virtual Optional<BinaryFunction> binary_op_lteq(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_lteq(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs >= rhs
-        virtual Optional<BinaryFunction> binary_op_gteq(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_gteq(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs << rhs
-        virtual Optional<BinaryFunction> binary_op_streamin(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_streamin(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
         // lhs >> rhs
-        virtual Optional<BinaryFunction> binary_op_streamout(IType* lhs, IType* rhs) = 0;
+        virtual Optional<BinaryFunction> binary_op_streamout(IGuavaType* lhs, IGuavaType* rhs) = 0;
 
     private:
-        using GuavaTypeUnaryFunction = std::function<Optional<UnaryFunction>(IOperatorProvider&, IType*)>;
-        using GuavaTypeBinaryFunction = std::function<Optional<BinaryFunction>(IOperatorProvider&, IType*, IType*)>;
+        using GuavaTypeUnaryFunction = std::function<Optional<UnaryFunction>(IOperatorProvider&, IGuavaType*)>;
+        using GuavaTypeBinaryFunction = std::function<Optional<BinaryFunction>(IOperatorProvider&, IGuavaType*, IGuavaType*)>;
 
         Map<GuavaTypeUnaryFunction> m_unary_map {
                 {"+-", &IOperatorProvider::unary_op_plusmin},
@@ -161,14 +167,14 @@ namespace guavalang::types {
 
 
     public:
-        Optional<BinaryFunction> binary_op(IType* lhs, const String& op, IType* rhs) {
+        Optional<BinaryFunction> binary_op(IGuavaType* lhs, const String& op, IGuavaType* rhs) {
             if (auto fn = from_op(op, m_binary_map)) {
                 return (*fn)(*this, lhs, rhs);
             }
             return NullOpt;
         }
 
-        Optional<UnaryFunction> unary_op(const String& op, IType* rhs) {
+        Optional<UnaryFunction> unary_op(const String& op, IGuavaType* rhs) {
             if (auto fn = from_op(op, m_unary_map)) {
                 return (*fn)(*this, rhs);
             }
