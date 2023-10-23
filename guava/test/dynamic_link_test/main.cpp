@@ -5,7 +5,6 @@
 #include "../guava-test-common.h"
 #include "../cpp/guava-common.h"
 #include "../cpp/util/dynamic-library-loader/dynamic-linker-export.h"
-#include "../cpp/intermediate-representation/TypeDeclaration.h"
 
 #include "shared/overloaded_link_shared.h"
 
@@ -23,12 +22,12 @@ NEW_TEST(basic_link) {
             DEBUGOUT << "Hello: ";
             fn(120);
             lib->unload();
-            return PASS;
+            PASS
         }
         DEBUGOUT << "Failed to get function" << ENDL;
         lib->unload();
     }
-    return FAIL;
+    FAIL
 }
 
 NEW_TEST(overloaded_link) {
@@ -85,13 +84,12 @@ extern "C" __declspec(dllexport) IType* create_type(double num) {
                 IType* type_a = type_constructor(a);
                 IType* type_b = type_constructor(b);
                 auto result = handler->double_mod(type_a, type_b);
-                auto ret = RESULT(result == fmod(a, b));
-                return ret;
+                RESULT(result == fmod(a, b))
             }
         }
         lib->unload();
     }
-    return FAIL;
+    FAIL
 }
 
 TEST_RESULT main() {

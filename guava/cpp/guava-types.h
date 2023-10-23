@@ -9,11 +9,10 @@
 #include <optional>
 #include <vector>
 #include <memory>
-#include <map>
+#include <unordered_map>
 
 #define NullOpt std::nullopt
 #define NewPtr std::make_shared
-
 
 namespace guavalang
 {
@@ -35,13 +34,18 @@ namespace guavalang
     using PVec = std::vector<Ptr<T>>;
 
     template<typename T>
-    using Map = std::map<String, T>;
+    using Map = std::unordered_map<String, T>;
 
     template<typename T>
-    using PMap = std::map<String, Ptr<T>>;
+    using PMap = Map<Ptr<T>>;
 
     template<typename T, typename R>
-    using Map2 = std::map<T, std::map<T, R>>;
+    using Map2 = std::unordered_map<T, std::unordered_map<T, R>>;
+
+    template<typename T, size_t Size>
+    using Array = std::array<T, Size>;
+
+    using Byte = unsigned char;
 
 }
 

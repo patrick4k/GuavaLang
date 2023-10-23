@@ -5,28 +5,28 @@
 #ifndef GUAVA_GUAVA_TEST_COMMON_H
 #define GUAVA_GUAVA_TEST_COMMON_H
 
+#define TESTOUT std::cout << "TEST: "
+#define ENDL std::endl
+#define FAIL_MSG(x) std::cout << "FAIL: " << #x << ENDL; return 1;
+
 #define TEST_RESULT int
-#define PASS 0
-#define FAIL 1
-#define RESULT(x) (x? PASS: FAIL)
+#define PASS return 0;
+#define FAIL return 1;
+#define RESULT(x) return (x? 0: 1);
 
 #define TEST_DIR(path) (String(R"(..\..\guava\test\)") + String(#path))
 //#define TEST_DIR(path) (String(R"(../../guava/test/)") + String(#path))
 
-#define TESTOUT std::cout << "TEST: "
-#define ENDL std::endl
-
 #define ADD_TEST(test_name) \
     TESTOUT << "Starting test \"" << #test_name << "\"" << ENDL; \
-    if (test_name() == FAIL) { \
-        TESTOUT << "Failed test \"" << #test_name << "\"" << ENDL; \
-        return FAIL; \
+    if (test_name() == 1) { \
+        FAIL_MSG(on #test_name) \
     } \
     else { \
         TESTOUT << "Passed test \"" << #test_name << "\"" << ENDL << ENDL; \
     }
 
-#define END_TEST() return PASS;
+#define END_TEST() PASS
 
 #define NEW_TEST(test_name) TEST_RESULT test_name()
 
