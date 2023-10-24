@@ -7,13 +7,15 @@
 
 #include "IGuavaType.h"
 #include "ITypeMember.h"
+#include "BaseOperatorProvider.h"
 
 namespace guavalang::types {
 
-    class IOperatorProvider;
-
-    class Type : public IGuavaType {
+    template<typename TDataProvider, typename TOperatorProvider = BaseOperatorProvider>
+    class Type : public IGuavaType, public TOperatorProvider {
     public:
+        using DataProvider = TDataProvider;
+
         Optional<InstanceConstructor> constructor_from(PVec<IGuavaType> arg_types) override {
             return NullOpt;
         }
@@ -27,7 +29,6 @@ namespace guavalang::types {
 
     protected:
         Optional<Ptr<IGuavaType>> m_parentType{};
-        PVec<ITypeMember> m_members{};
     };
 }
 

@@ -14,6 +14,7 @@
 #define DOUT std::cout
 #define DEBUGOUT DOUT << "DEBUG " << RUNTIME << "ms: "
 #define DEBUGOUT_HIRES DOUT << "DEBUG " << RUNTIME_HIRES << "ns: "
+#define DEBUG_EXPR(expr) DEBUGOUT << #expr << " = " << expr << ENDL
 
 static auto s_startTime = std::chrono::high_resolution_clock::now();
 #define NOW std::chrono::high_resolution_clock::now()

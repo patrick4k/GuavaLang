@@ -171,9 +171,7 @@ std::any GuavaScriptVisitor::visitDeclarativeAssignment(GuavaParser::Declarative
 }
 
 std::any GuavaScriptVisitor::visitMultiAssignment(GuavaParser::MultiAssignmentContext *ctx) {
-    // TODO: Implement
-    DEBUGOUT << "Multi Assignment Not Complete!" << ENDL;
-    return {};
+    NOT_IMPLEMENTED
 }
 
 std::any GuavaScriptVisitor::visitUnwrappedTuple(GuavaParser::UnwrappedTupleContext *ctx) {

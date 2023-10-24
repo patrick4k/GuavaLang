@@ -14,52 +14,53 @@ virtual Optional<TemplateBinaryFunction> function_name() {\
 return NullOpt;\
 }\
 \
-Optional<BinaryFunction> function_name(IGuavaType *lhs, IGuavaType *rhs) override final {\
-        if (typeid(*lhs) == typeid(LHS) && typeid(*rhs) == typeid(RHS)) {\
-            if (auto funcOpt = function_name()) {         \
-                auto func = *funcOpt;               \
-                return [func](Instance lhs, Instance rhs) {\
-                    auto lhs_data = dynamic_cast<LHS*>(lhs.getDataProvider().get());\
-                    auto rhs_data = dynamic_cast<RHS*>(rhs.getDataProvider().get());\
-                    return func(lhs_data, rhs_data);\
-                };\
-            }\
-        }\
-        return NullOpt;\
+Optional<BinaryFunction> function_name(IGuavaType *lhs, IGuavaType *rhs) final {\
+if (auto lhs_data = dynamic_cast<LHS_Type*>(lhs)) {\
+if (auto rhs_data = dynamic_cast<RHS_Type*>(rhs)) {\
+if (auto funcOpt = function_name()) {\
+auto func = *funcOpt;\
+return [func](const Instance& lhs, const Instance& rhs) {\
+auto lhs_data = dynamic_cast<LHS_DataProvider*>(lhs.getDataProvider().get());\
+auto rhs_data = dynamic_cast<RHS_DataProvider*>(rhs.getDataProvider().get());\
+return func(lhs_data, rhs_data);\
+};\
+}\
+}\
+}\
+\
+return NullOpt;\
 }
 
 namespace guavalang::types {
 
-    template<typename LHS, typename RHS>
+    template<typename LHS_Type, typename LHS_DataProvider, typename RHS_Type, typename RHS_DataProvider>
     class TemplateOperatorProvider: public BaseOperatorProvider {
     protected:
-        using TemplateBinaryFunction = std::function<Instance(LHS*, RHS*)>;
+        using TemplateBinaryFunction = std::function<Instance(LHS_DataProvider *, RHS_DataProvider *)>;
 
     public:
-        virtual Optional<TemplateBinaryFunction> binary_op_bracket() {
-            return NullOpt;
-        }
+//        virtual Optional<TemplateBinaryFunction> binary_op_bracket() {
+//            return NullOpt;
+//        }
+//
+//        Optional<BinaryFunction> binary_op_bracket(IGuavaType *lhs, IGuavaType *rhs) final {
+//            if (auto lhs_data = dynamic_cast<LHS_Type*>(lhs)) {
+//                if (auto rhs_data = dynamic_cast<RHS_Type*>(rhs)) {
+//                    if (auto funcOpt = binary_op_bracket()) {
+//                        auto func = *funcOpt;
+//                        return [func](const Instance& lhs, const Instance& rhs) {
+//                            auto lhs_data = dynamic_cast<LHS_DataProvider*>(lhs.getDataProvider().get());
+//                            auto rhs_data = dynamic_cast<RHS_DataProvider*>(rhs.getDataProvider().get());
+//                            return func(lhs_data, rhs_data);
+//                        };
+//                    }
+//                }
+//            }
+//
+//            return NullOpt;
+//        }
 
-        Optional<BinaryFunction> binary_op_bracket(IGuavaType *lhs, IGuavaType *rhs) override final {
-            if (auto lhs_data_opt = lhs->GetOperatorProvider()) {
-                if (auto lhs_data = dynamic_cast<LHS*>(*lhs_data_opt)) {
-                    if (auto rhs_data_opt = rhs->GetOperatorProvider()) {
-                        if (auto rhs_data = dynamic_cast<RHS*>(*rhs_data_opt)) {
-                            if (auto funcOpt = binary_op_bracket()) {
-                                auto func = *funcOpt;
-                                return [func](Instance lhs, Instance rhs) {
-                                    auto lhs_data = dynamic_cast<LHS*>(rhs.getDataProvider().get());
-                                    auto rhs_data = dynamic_cast<RHS*>(rhs.getDataProvider().get());
-                                    return func(lhs_data, rhs_data);
-                                };
-                            }
-                        }
-                    }
-                }
-            }
-
-            return NullOpt;
-        }
+        CastFunc(binary_op_bracket)
 
         CastFunc(binary_op_pow)
 
