@@ -6,7 +6,7 @@
 #define GUAVA_PARSER_UTIL_H
 
 #include "../guava-common.h"
-#include "templates/AnyTemplate.h"
+#include "ast/IAstNode.h"
 
 namespace guavaparser {
 

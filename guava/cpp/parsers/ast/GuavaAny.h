@@ -2,16 +2,16 @@
 // Created by Patrick Kennedy on 10/10/23.
 //
 
-#ifndef GUAVA_ANYTEMPLATE_H
-#define GUAVA_ANYTEMPLATE_H
+#ifndef GUAVA_GUAVAANY_H
+#define GUAVA_GUAVAANY_H
 
 #include "../../guava-common.h"
-#include "IAstTemplate.h"
+#include "IAstNode.h"
 
 namespace guavaparser {
-    class AnyTemplate {
+    class GuavaAny {
     public:
-        explicit AnyTemplate(Ptr<IAstTemplate> ptr) :
+        explicit GuavaAny(Ptr<IAstNode> ptr) :
         m_ptr(std::move(ptr))
         {
         }
@@ -22,8 +22,8 @@ namespace guavaparser {
         }
 
     private:
-        Ptr<IAstTemplate> m_ptr{};
+        Ptr<IAstNode> m_ptr{};
     };
 }
 
-#endif //GUAVA_ANYTEMPLATE_H
+#endif //GUAVA_GUAVAANY_H

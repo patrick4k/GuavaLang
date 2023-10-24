@@ -5,8 +5,7 @@
 #include <functional>
 #include "parsers/parser-common.h"
 #include "guava-common.h"
-#include "parsers/templates/Script.h"
-#include "util/dynamic-library-loader/dynamic-linker-export.h"
+#include "parsers/ast/Script.h"
 
 using namespace guavalang;
 using namespace guavaparser;
@@ -41,7 +40,7 @@ int main(int argc, char** argv) {
 
     /* Assemble AST */
     DEBUGOUT << "Starting to assemble AST" << ENDL;
-    const auto script = std::any_cast<AnyTemplate>(visitor.visitScript(tree)).as<Script>();
+    const auto script = std::any_cast<GuavaAny>(visitor.visitScript(tree)).as<Script>();
     DEBUGOUT << "Assembled AST successfully" << ENDL;
     return 0;
 }

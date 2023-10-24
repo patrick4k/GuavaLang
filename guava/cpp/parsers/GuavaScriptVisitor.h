@@ -7,7 +7,8 @@
 
 #include "GuavaParserBaseVisitor.h"
 #include "parser-util.h"
-#include "templates/parameters/Parameters.h"
+#include "ast/parameters/Parameters.h"
+#include "ast/GuavaAny.h"
 
 namespace guavaparser {
     class GuavaScriptVisitor: public GuavaParserBaseVisitor {
@@ -15,13 +16,13 @@ namespace guavaparser {
         template<typename T>
         Optional<Ptr<T>> AnyVisit(antlr4::tree::ParseTree* tree, Optional<Ptr<T>> defaultVal = NullOpt) {
             if (!tree) return defaultVal;
-            const AnyTemplate any = std::any_cast<AnyTemplate>(visit(tree));
+            const GuavaAny any = std::any_cast<GuavaAny>(visit(tree));
             return any.as<T>();
         }
 
         Ptr<Parameters> AnyVisit(GuavaParser::ParametersContext* tree) {
             if (!tree) return NewPtr<Parameters>();
-            const AnyTemplate any = std::any_cast<AnyTemplate>(visit(tree));
+            const GuavaAny any = std::any_cast<GuavaAny>(visit(tree));
             return any.as<Parameters>();
         }
 
@@ -38,7 +39,7 @@ namespace guavaparser {
 
         virtual std::any aggregateResult(std::any aggregate, std::any nextResult) override {
             try {
-                std::any_cast<AnyTemplate>(nextResult);
+                std::any_cast<GuavaAny>(nextResult);
             } catch (const std::bad_any_cast& e) {
                 return aggregate;
             }

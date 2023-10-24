@@ -9,7 +9,7 @@
 #include "Parameter.h"
 
 namespace guavaparser {
-    class Parameters : public IAstTemplate {
+    class Parameters : public IAstNode {
     public:
         Parameters() = default;
         explicit Parameters(PVec<Parameter> parameters) :

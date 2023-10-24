@@ -13,7 +13,7 @@ using namespace guavalang;
 
 namespace guavaparser {
 
-    class Parameter : public IAstTemplate {
+    class Parameter : public IAstNode {
     public:
         explicit Parameter(Ptr<IExpression> id, Optional<Ptr<IExpression>> type) :
         m_id(std::move(id)),

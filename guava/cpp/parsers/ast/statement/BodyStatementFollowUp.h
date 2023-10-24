@@ -9,7 +9,7 @@
 #include "IStatement.h"
 
 namespace guavaparser {
-    class BodyStatementFollowUp : public IAstTemplate {
+    class BodyStatementFollowUp : public IAstNode {
     public:
         BodyStatementFollowUp(String bodyFollowUpKeyword, Ptr<IStatement> statement) :
         m_bodyFollowUpKeyword(std::move(bodyFollowUpKeyword)),

@@ -10,7 +10,7 @@
 
 namespace guavaparser {
     template<typename T>
-    class TMatrix : public IAstTemplate {
+    class TMatrix : public IAstNode {
     public:
         TMatrix() = default;
         explicit TMatrix(Optional<Ptr<TMatrix<T>>> matrix) {

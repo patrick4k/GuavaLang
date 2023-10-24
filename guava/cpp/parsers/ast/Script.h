@@ -6,11 +6,11 @@
 #define GUAVA_SCRIPT_H
 
 
-#include "templates-common.h"
+#include "ast-common.h"
 #include "../../guava-common.h"
 
 namespace guavaparser {
-    class Script : public IAstTemplate {
+    class Script : public IAstNode {
     public:
         Script(PVec<Function> functions) :
         m_functions(std::move(functions))

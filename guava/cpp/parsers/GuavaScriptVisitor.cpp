@@ -5,12 +5,12 @@
 #include "../guava-common.h"
 #include "GuavaScriptVisitor.h"
 #include "parser-util.h"
-#include "templates/templates-common.h"
+#include "ast/ast-common.h"
 #include "../util/vec-util.h"
 
 using namespace guavaparser;
 
-#define RET_ANY(any) return AnyTemplate(any);
+#define RET_ANY(any) return GuavaAny(any);
 #define RET_NEW(type, args) RET_ANY(NewPtr<type>args)
 
 template<typename T>
